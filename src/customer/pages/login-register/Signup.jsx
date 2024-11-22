@@ -1,149 +1,241 @@
 import React from 'react';
-import { Formik } from 'formik';
+import { Formik, useFormik } from 'formik';
+import { useState } from 'react';
+import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { registerUser } from '../../../api/ApiAuthService';
+import { Link, useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../../../components/loading-spinner/LoadingSpinner';
 import Navbar from '../../navbar/Navbar';
+
+const validationSchema = Yup.object().shape({
+  fullName: Yup.string()
+    .matches(/^[a-zA-Z\sÀ-ỹ]+$/, 'Name must contain only letters and spaces')
+    .matches(/^(?!.*\s{2})/, 'Name must not contain consecutive spaces')
+    .required('Name is required'),
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  password: Yup.string()
+    .min(10, 'Password must be at least 10 characters')
+    .test('no-full-spaces', 'Password must not contain only spaces', value => value.trim() !== '')
+    .required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm Password is required'),
+  agreement: Yup.boolean().oneOf([true], 'You must agree to the Terms of Service'),
+});
 
 const Signup = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (values) => {
+    if (formik.isValid) {
+      setLoading(true);
+      try {
+        const response = await registerUser(values);
+        setSuccessMessage(response.data);
+        setErrorMessage("");
+      } catch (error) {
+        setSuccessMessage("");
+        setErrorMessage(`${error.response.data.detail}`);
+      }
+      setLoading(false);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    },
+    validationSchema: validationSchema,
+    onSubmit: handleSubmit,
+  });
 
   return (
     <div>
-      <div className='fixed-navbar'><Navbar /></div>
+      <div><Navbar /></div>
       <div className="bg-light h-24"></div>
+
       <Formik
         initialValues={{
           fullName: '',
           email: '',
           password: '',
-          confirmPassword: '',
         }}
-        onSubmit={() => {}}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
       >
-        {formik => (
-          <section className="h-screen bg-light">
-            <div className="flex items-center h-full">
-              <div className="container mx-auto h-30">
+        <div>
+          {loading && <LoadingSpinner />}
+          <section className="min-h-screen bg-white">
+            <div className="mask flex items-center justify-center h-full">
+              <div className="container mx-auto h-full">
                 <div className="flex justify-center items-center h-full">
-                  <div className="w-full max-w-md">
-                    <div className="bg-white rounded-lg shadow-md">
-                      <div className="p-6">
-                        <h2 className="text-2xl font-bold text-center mb-4">Create an account</h2>
+                  <div className="w-full md:w-2/3 lg:w-1/2 xl:w-5/12">
+                    <div className="bg-white rounded-lg shadow-lg p-8">
+                      <h2 className="text-2xl text-center mb-6">Create an account</h2>
+                      {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
+                      {successMessage && (
+                        <>
+                          <p className="text-green-500 text-center mb-4">Vui lòng kiểm tra email đăng ký của bạn để kích hoạt tài khoản</p>
+                          <div className="flex justify-center">
+                            <button
+                              onClick={() => navigate("/login")}
+                              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
+                            >
+                              Chuyển hướng tới đăng nhập
+                            </button>
+                          </div>
+                        </>
+                      )}
+
+                      {!successMessage && (
                         <form onSubmit={formik.handleSubmit}>
                           <div className="mb-4">
-                            <label className="block text-lg font-semibold mb-2" htmlFor="fullName">
+                            <label htmlFor="fullName" className="block text-sm font-bold text-gray-700">
                               Full Name <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="text"
                               id="fullName"
                               name="fullName"
-                              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                              className={`w-full p-3 border border-gray-300 rounded-lg ${formik.touched.fullName && formik.errors.fullName ? 'border-red-500' : ''}`}
                               onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
                               value={formik.values.fullName}
                             />
+                            {formik.touched.fullName && formik.errors.fullName && (
+                              <div className="text-red-500 text-sm">{formik.errors.fullName}</div>
+                            )}
                           </div>
 
+                          {/* Your Email Input */}
                           <div className="mb-4">
-                            <label className="block text-lg font-semibold mb-2" htmlFor="email">
+                            <label htmlFor="email" className="block text-sm font-bold text-gray-700">
                               Your Email <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="email"
                               id="email"
                               name="email"
-                              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                              className={`w-full p-3 border border-gray-300 rounded-lg ${formik.touched.email && formik.errors.email ? 'border-red-500' : ''}`}
                               onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
                               value={formik.values.email}
                             />
+                            {formik.touched.email && formik.errors.email && (
+                              <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                            )}
                           </div>
 
+                          {/* Your Password Input */}
                           <div className="mb-4 relative">
-                            <label className="block text-lg font-semibold mb-2" htmlFor="password">
+                            <label htmlFor="password" className="block text-sm font-bold text-gray-700">
                               Password <span className="text-red-500">*</span>
                             </label>
                             <input
                               type={showPassword ? 'text' : 'password'}
                               id="password"
                               name="password"
-                              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                              className={`w-full p-3 border border-gray-300 rounded-lg ${formik.touched.password && formik.errors.password ? 'border-red-500' : ''}`}
                               onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
                               value={formik.values.password}
                             />
                             <button
                               type="button"
-                              className="absolute right-2 top-2 text-gray-500"
+                              className="absolute right-2 top-1/2 transform -translate-y-1/2"
                               onClick={() => setShowPassword(!showPassword)}
                             >
                               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                             </button>
+
+                            {formik.touched.password && formik.errors.password && (
+                              <div className="text-red-500 text-sm">{formik.errors.password}</div>
+                            )}
                           </div>
 
+                          {/* Confirm Password Input */}
                           <div className="mb-4 relative">
-                            <label className="block text-lg font-semibold mb-2" htmlFor="confirmPassword">
+                            <label htmlFor="confirmPassword" className="block text-sm font-bold text-gray-700">
                               Repeat Password <span className="text-red-500">*</span>
                             </label>
                             <input
                               type={showConfirmPassword ? 'text' : 'password'}
                               id="confirmPassword"
                               name="confirmPassword"
-                              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                              className={`w-full p-3 border border-gray-300 rounded-lg ${formik.touched.confirmPassword && formik.errors.confirmPassword ? 'border-red-500' : ''}`}
                               onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
                               value={formik.values.confirmPassword}
                             />
                             <button
                               type="button"
-                              className="absolute right-2 top-2 text-gray-500"
+                              className="absolute right-2 top-1/2 transform -translate-y-1/2"
                               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                             >
                               <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
                             </button>
+
+                            {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                              <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
+                            )}
                           </div>
 
-                          <div className="mb-6 flex items-center">
+                          {/* Agreement Checkbox */}
+                          <div className="mb-4 flex justify-center items-center">
                             <input
-                              className="mr-2 leading-tight"
                               type="checkbox"
-                              value=""
                               id="form2Example3cg"
+                              className="mr-2"
                             />
-                            <label className="text-gray-700" htmlFor="form2Example3g">
-                              I agree all statements in{' '}
-                              <a href="#!" className="text-blue-600 underline">
-                                Terms of service
+                            <label htmlFor="form2Example3g" className="text-sm">
+                              I agree to all statements in{' '}
+                              <a href="#!" className="text-blue-500 underline">
+                                Terms of Service
                               </a>
                             </label>
                           </div>
 
+                          {/* Submit Button */}
                           <div className="flex justify-center">
                             <button
                               type="submit"
-                              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+                              className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
+                              disabled={!formik.isValid}
                             >
                               Register
                             </button>
                           </div>
-                          <p className="text-center text-gray-500 mt-4">
+
+                          {/* Login Link */}
+                          <p className="text-center text-sm text-gray-500 mt-6">
                             Have already an account?{' '}
-                            <Link to="/login" className="text-blue-600 font-semibold">
+                            <Link to="/login" className="font-bold text-blue-500 underline">
                               Login here
                             </Link>
                           </p>
                         </form>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
-        )}
+        </div>
       </Formik>
       <div className="bg-light h-24"></div>
     </div>
   );
-}
+};
 
 export default Signup;

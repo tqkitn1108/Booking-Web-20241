@@ -1,19 +1,24 @@
 import "./newHotel.scss";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
+import ModalBootstrap from "../../../components/modal/ModalBootstrap";
 import { useEffect, useState } from "react";
+import { hotelInputs } from "../../../data/formSource";
 import api from "../../../api/AxiosConfig";
-import { useLocation} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import LoadingSpinner from "../../../components/loading-spinner/LoadingSpinner";
 
 const HotelInput = () => {
-  const [setShowModal] = useState(false);
-  const [setModalMessage] = useState('');
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [images, setImages] = useState([]);
-  const [facilities, setFacilities] = useState([])
+  const [facilities, setFacilities] = useState([]);
   const [info, setInfo] = useState({});
   const location = useLocation();
   const hotelId = new URLSearchParams(location.search).get("hotelId");
@@ -31,7 +36,7 @@ const HotelInput = () => {
     if (hotelId) {
       renderHotelDetails();
     }
-  }, [])
+  }, []);
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -39,13 +44,15 @@ const HotelInput = () => {
 
   const handleSelectChange = (event) => {
     const options = event.target.options;
-    const selectedOptionsArray = Array.from(options).filter((option) => option.selected);
+    const selectedOptionsArray = Array.from(options).filter(
+      (option) => option.selected
+    );
     const selectedValues = selectedOptionsArray.map((option) => option.value);
     setFacilities(selectedValues);
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files && (images.length + e.target.files.length) <= 6) {
+    if (e.target.files && images.length + e.target.files.length <= 6) {
       const fileListArray = Array.from(e.target.files);
       setImages((prevImages) => prevImages.concat(fileListArray));
     }
@@ -55,8 +62,14 @@ const HotelInput = () => {
     return source.map((file, index) => {
       return (
         <div key={index} className="imageContainer">
-          <img src={typeof file === 'string' ? file : URL.createObjectURL(file)} alt="" />
-          <button onClick={() => handleRemoveImage(index)} className="removeButton">
+          <img
+            src={typeof file === "string" ? file : URL.createObjectURL(file)}
+            alt=""
+          />
+          <button
+            onClick={() => handleRemoveImage(index)}
+            className="removeButton"
+          >
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
@@ -76,7 +89,7 @@ const HotelInput = () => {
     try {
       const list = await Promise.all(
         images.map(async (image) => {
-          if (typeof image !== 'string') {
+          if (typeof image !== "string") {
             const data = new FormData();
             data.append("file", image);
             const uploadRes = await api.post("/upload", data);
@@ -90,7 +103,7 @@ const HotelInput = () => {
       const newhotel = {
         ...info,
         photos: list,
-        email: JSON.parse(localStorage.getItem("user")).userEmail
+        email: JSON.parse(localStorage.getItem("user")).userEmail,
       };
       if (!newhotel.facilities) newhotel.facilities = facilities;
 
@@ -99,7 +112,7 @@ const HotelInput = () => {
       } else {
         await api.post("/business/hotels", newhotel);
       }
-      setModalMessage('Thành công! Quay trở lại trang chủ.');
+      setModalMessage("Thành công! Quay trở lại trang chủ.");
     } catch (err) {
       setModalMessage(err.response);
     }
@@ -107,26 +120,86 @@ const HotelInput = () => {
     setShowModal(true);
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+    navigate("/business/hotels");
+  };
   const vietnamProvinces = [
-    "Sa Pa", "Vũng Tàu", "Bắc Giang", "Hạ Long", "Sầm Sơn",
-    "Bắc Ninh", "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước",
-    "Bình Thuận", "Hội An", "Cao Bằng", "Đà Lạt", "Điện Biên Phủ", "Tuy Hòa",
-    "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Tĩnh",
-    "Hải Dương", "Cửa Lò", "Phong Nha", "Hưng Yên", "Khánh Hòa", "Kiên Giang",
-    "Kon Tum", "Lai Châu", "Lâm Đồng", "Đảo Cát Bà", "Lào Cai", "Long An",
-    "Mỹ Tho", "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Quảng Bình",
-    "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng",
-    "Sơn La", "Phú Quốc", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Huế",
-    "Tiền Giang", "Quy Nhơn", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Nha Trang",
-    "Phú Yên", "Cần Thơ", "Đà Nẵng", "Hải Phòng", "Hà Nội", "TP. Hồ Chí Minh"
+    "Sa Pa",
+    "Vũng Tàu",
+    "Bắc Giang",
+    "Hạ Long",
+    "Sầm Sơn",
+    "Bắc Ninh",
+    "Bến Tre",
+    "Bình Định",
+    "Bình Dương",
+    "Bình Phước",
+    "Bình Thuận",
+    "Hội An",
+    "Cao Bằng",
+    "Đà Lạt",
+    "Điện Biên Phủ",
+    "Tuy Hòa",
+    "Đồng Nai",
+    "Đồng Tháp",
+    "Gia Lai",
+    "Hà Giang",
+    "Hà Nam",
+    "Hà Tĩnh",
+    "Hải Dương",
+    "Cửa Lò",
+    "Phong Nha",
+    "Hưng Yên",
+    "Khánh Hòa",
+    "Kiên Giang",
+    "Kon Tum",
+    "Lai Châu",
+    "Lâm Đồng",
+    "Đảo Cát Bà",
+    "Lào Cai",
+    "Long An",
+    "Mỹ Tho",
+    "Nghệ An",
+    "Ninh Bình",
+    "Ninh Thuận",
+    "Phú Thọ",
+    "Quảng Bình",
+    "Quảng Nam",
+    "Quảng Ngãi",
+    "Quảng Ninh",
+    "Quảng Trị",
+    "Sóc Trăng",
+    "Sơn La",
+    "Phú Quốc",
+    "Thái Bình",
+    "Thái Nguyên",
+    "Thanh Hóa",
+    "Huế",
+    "Tiền Giang",
+    "Quy Nhơn",
+    "Tuyên Quang",
+    "Vĩnh Long",
+    "Vĩnh Phúc",
+    "Nha Trang",
+    "Phú Yên",
+    "Cần Thơ",
+    "Đà Nẵng",
+    "Hải Phòng",
+    "Hà Nội",
+    "TP. Hồ Chí Minh",
   ];
   return (
     <div className="new w-full flex">
-      {/*ModalBootstrap*/}
-      {/*Sidebar*/}
-      {loading} {/*Loading Spinner*/}
+      <ModalBootstrap
+        body={modalMessage}
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+      />
+      <Sidebar hideSideBar={true} />
+      {loading && <LoadingSpinner />}
       <div className="newContainer">
-        {/*Navbar*/}
+        <Navbar />
         <div className="top">
           <h1>Chi tiết khách sạn</h1>
         </div>
@@ -143,7 +216,7 @@ const HotelInput = () => {
             /> */}
           </div>
           <div className="right">
-            <form  >
+            <form>
               <div className="formInput image">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -157,12 +230,31 @@ const HotelInput = () => {
                 />
               </div>
 
-              {/*Hotel Input*/}
+              {hotelInputs.map((input) => (
+                <div className="formInput" key={input.id}>
+                  <label>{input.label}</label>
+                  <input
+                    id={input.id}
+                    onChange={handleChange}
+                    type={input.type}
+                    placeholder={input.placeholder}
+                    value={info[input.id]}
+                  />
+                </div>
+              ))}
               <div className="formInput">
                 <label>Kiểu chỗ nghỉ</label>
-                <select id="type" className="form-select" aria-label="Default select example" value={info?.type?.name}
-                  onChange={handleChange}>
-                  <option selected disabled> -- Chọn kiểu chỗ nghỉ --</option>
+                <select
+                  id="type"
+                  className="form-select"
+                  aria-label="Default select example"
+                  value={info?.type?.name}
+                  onChange={handleChange}
+                >
+                  <option selected disabled>
+                    {" "}
+                    -- Chọn kiểu chỗ nghỉ --
+                  </option>
                   <option value={"hotel"}>Khách sạn</option>
                   <option value={"apartment"}>Căn hộ</option>
                   <option value={"resort"}>Resort</option>
@@ -182,7 +274,9 @@ const HotelInput = () => {
                   value={info?.dest}
                   onChange={handleChange}
                 >
-                  <option selected disabled>-- Chọn địa điểm --</option>
+                  <option selected disabled>
+                    -- Chọn địa điểm --
+                  </option>
                   {vietnamProvinces.sort().map((province, index) => (
                     <option key={index} value={province}>
                       {province}
@@ -192,9 +286,17 @@ const HotelInput = () => {
               </div>
               <div className="formInput">
                 <label>Xếp hạng chỗ nghỉ</label>
-                <select id="star" className="form-select" aria-label="Default select example" value={info?.star}
-                  onChange={handleChange}>
-                  <option disabled selected> -- Chọn xếp hạng chỗ nghỉ --</option>
+                <select
+                  id="star"
+                  className="form-select"
+                  aria-label="Default select example"
+                  value={info?.star}
+                  onChange={handleChange}
+                >
+                  <option disabled selected>
+                    {" "}
+                    -- Chọn xếp hạng chỗ nghỉ --
+                  </option>
                   <option value={0}>Không xếp hạng</option>
                   <option value={1}>Khách sạn 1 sao</option>
                   <option value={2}>Khách sạn 2 sao</option>
@@ -205,7 +307,12 @@ const HotelInput = () => {
               </div>
               <div className="formInput">
                 <label>Các tiện ích</label>
-                <select id="facilities" multiple onChange={handleSelectChange} className="multi-select">
+                <select
+                  id="facilities"
+                  multiple
+                  onChange={handleSelectChange}
+                  className="multi-select"
+                >
                   <option value={"non_smoking"}>Phòng không hút thuốc</option>
                   <option value={"family_room"}>Phòng gia đình</option>
                   <option value={"free_wifi"}>Wifi miễn phí</option>
@@ -223,14 +330,12 @@ const HotelInput = () => {
                 />
               </div>
 
-
               <div className="d-flex justify-content-center">
                 <button className="submit-button" onClick={handleClick}>
                   {hotelId ? "Cập nhật" : "Đăng ký khách sạn"}
                 </button>
               </div>
             </form>
-
           </div>
         </div>
       </div>
