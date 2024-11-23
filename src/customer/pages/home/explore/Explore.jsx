@@ -5,10 +5,23 @@ import { Navigation } from 'swiper/modules';
 import { destinations } from '../../../../data/destinationData';
 import { IoCaretBackCircleOutline, IoCaretForwardCircleSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom';
-
+import { countByDest } from '../../../../api/ApiFunctions';
+import { useEffect, useState } from "react";
 const Explore = () => {
     const slidesPerView = 4;
-
+    const [numProperties, setNumProperties] = useState({});
+    useEffect(() => {
+        async function countExploreProperties() {
+            const destParams = destinations.reduce((list, destination) => list + `,${destination.name}`, "");
+            try {
+                const response = await countByDest(destParams.slice(1).replaceAll(" ", "%20"));
+                setNumProperties(response.data)
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        countExploreProperties()
+    }, []);
     return (
         <div className="flex justify-center w-full">
             <div className="w-full max-w-[1200px] relative">
@@ -20,7 +33,7 @@ const Explore = () => {
                     modules={[Navigation]}
                     slidesPerView={slidesPerView}
                     spaceBetween={16}
-                    loop={true}
+                    loop={false}
                     className="swiper-container"
                 >
                     {destinations.map((destinations, i) => (
@@ -34,7 +47,7 @@ const Explore = () => {
                                 />
                                 <div className="text-center mt-2">
                                     <h5 className="text-lg font-bold">{destinations.name}</h5>
-                                    <h5 className="text-gray-700 font-normal mt-1 text-sm">0 chỗ nghỉ</h5>
+                                    <h5 className="text-gray-700 font-normal mt-1 text-sm">{numProperties[destinations.name]} chỗ nghỉ</h5>
                                 </div>
                             </Link>
                         </SwiperSlide>

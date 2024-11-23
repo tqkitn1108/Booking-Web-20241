@@ -2,7 +2,7 @@ import React from 'react';
 import PropertyType from './property-type/PropertyType';
 import Trending from './trending/Trending';
 import Explore from './explore/Explore';
-import TripPlanner from './trip-planner/trip-planner';
+import TripPlanner from './trip-planner/Trip-planner';
 import FeaturedHome from './feature-home/FeatureHome';
 import FavoriteDestination from './favorite-destination/FavoriteDestination';
 import Navbar from '../../navbar/Navbar';

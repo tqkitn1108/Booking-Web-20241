@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext, useAuth } from "../context/AuthContext";
 import AuthProvider from "../context/AuthContext";
 import { useContext } from "react";
-import Home from "../customer/pages/home/home"
+import Home from "../customer/pages/home/Home"
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();

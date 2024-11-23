@@ -13,10 +13,12 @@ import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useAuth } from "../../../context/AuthContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-// import api from "../../../api/AxiosConfig";
+import { DarkModeContext } from "../../context/darkModeContext";
+import { useContext, useEffect, useState } from "react";
+import api from "../../../api/AxiosConfig";
 
 const Sidebar = ({ hideSideBar }) => {
+    const { dispatch } = useContext(DarkModeContext);
     const { hotelId } = useParams();
     const [hotelImg, setHotelImg] = useState("");
     const [hotelName, setHotelName] = useState("");
@@ -29,72 +31,115 @@ const Sidebar = ({ hideSideBar }) => {
     useEffect(() => {
         async function loadData() {
             try {
-                // const response = await api.get(`/business/hotels/${hotelId}`);
-                // setHotelImg(response.data.photos?.[0]);
-                // setHotelName(response.data.name);
+                const response = await api.get(`/business/hotels/${hotelId}`);
+                setHotelImg(response.data.photos?.[0])
+                setHotelName(response.data.name);
             } catch (error) {
-                console.error("Error loading hotel data", error);
+                console.log(error);
             }
         }
-        loadData();
-    }, [hotelId]);
-
+        if (hotelId) {
+            loadData();
+        }
+    }, []);
     return (
-        <div className={`sidebar ${hideSideBar ? "hidden" : ""}`}>
-            <div className="sidebarWrapper">
-                <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Dashboard</h3>
-                    <ul className="sidebarList">
-                        <li className="sidebarListItem">
-                            <DashboardIcon className="sidebarIcon" />
-                            Dashboard
+        <div className="sidebar">
+            <div className="top">
+                {hideSideBar ?
+                    <Link to="/business/hotels" style={{ textDecoration: "none" }}>
+                        <span className="logo">TravelBK</span>
+                    </Link> : (
+                        <Link to={`/business/hotels/${hotelId}`} style={{ textDecoration: "none" }}>
+                            <div className="avatar-with-hotelName">
+                                <img className="avatar" src={hotelImg} alt="Avatar" />
+                                <div className="hotelName">{hotelName}</div>
+                            </div>
+                        </Link>
+                    )
+                }
+            </div>
+            <hr />
+            <div className="center">
+                <ul>
+                    <p className="title">MAIN</p>
+                    <Link to="/business/hotels" style={{ textDecoration: "none" }}>
+                        <li>
+                            <DashboardIcon className="icon" />
+                            <span>Trang chủ</span>
                         </li>
-                        <li className="sidebarListItem">
-                            <PersonOutlineIcon className="sidebarIcon" />
-                            Users
-                        </li>
-                        <li className="sidebarListItem">
-                            <LocalShippingIcon className="sidebarIcon" />
-                            Delivery
-                        </li>
-                        <li className="sidebarListItem">
-                            <CreditCardIcon className="sidebarIcon" />
-                            Transactions
-                        </li>
-                        <li className="sidebarListItem">
-                            <StoreIcon className="sidebarIcon" />
-                            Products
-                        </li>
-                        <li className="sidebarListItem">
-                            <InsertChartIcon className="sidebarIcon" />
-                            Reports
-                        </li>
-                        <li className="sidebarListItem">
-                            <SettingsApplicationsIcon className="sidebarIcon" />
-                            Settings
-                        </li>
-                        <li className="sidebarListItem">
-                            <NotificationsNoneIcon className="sidebarIcon" />
-                            Notifications
-                        </li>
-                        <li className="sidebarListItem">
-                            <SettingsSystemDaydreamOutlinedIcon className="sidebarIcon" />
-                            System Health
-                        </li>
-                        <li className="sidebarListItem">
-                            <PsychologyOutlinedIcon className="sidebarIcon" />
-                            Logs
-                        </li>
-                        <li className="sidebarListItem">
-                            <AccountCircleOutlinedIcon className="sidebarIcon" />
-                            Profile
-                        </li>
-                        <li className="sidebarListItem" onClick={handleLogoutClick}>
-                            <ExitToAppIcon className="sidebarIcon" />
-                            Logout
-                        </li>
-                    </ul>
-                </div>
+                    </Link>
+                    {!hideSideBar && (
+                        <>
+                            <p className="title">LISTS</p>
+                            <Link to={`/business/hotels/${hotelId}/bookings/pending`} style={{ textDecoration: "none" }}>
+                                <li>
+                                    <PersonOutlineIcon className="icon" />
+                                    <span>Đặt phòng đang chờ</span>
+                                </li>
+                            </Link>
+                            <Link to={`/business/hotels/${hotelId}/bookings`} style={{ textDecoration: "none" }}>
+                                <li>
+                                    <LocalShippingIcon className="icon" />
+                                    <span>Đặt phòng</span>
+                                </li>
+                            </Link>
+                            <Link to={`/business/hotels/${hotelId}/rooms`} style={{ textDecoration: "none" }}>
+                                <li>
+                                    <CreditCardIcon className="icon" />
+                                    <span>Danh sách phòng</span>
+                                </li>
+                            </Link>
+                            <Link to={`/business/hotels/${hotelId}`} style={{ textDecoration: "none" }}>
+                                <li>
+                                    <StoreIcon className="icon" />
+                                    <span>Tổng quan khách sạn</span>
+                                </li>
+                            </Link>
+                            <p className="title">USEFUL</p>
+                            <Link to={`/business/hotels/${hotelId}/stats`} style={{ textDecoration: "none" }}>
+                                <li>
+                                    <InsertChartIcon className="icon" />
+                                    <span>Stats</span>
+                                </li>
+                            </Link>
+                            <li>
+                                <NotificationsNoneIcon className="icon" />
+                                <span>Notifications</span>
+                            </li>
+                        </>)}
+                    <p className="title">SERVICE</p>
+                    <li>
+                        <SettingsSystemDaydreamOutlinedIcon className="icon" />
+                        <span>System Health</span>
+                    </li>
+                    <li>
+                        <PsychologyOutlinedIcon className="icon" />
+                        <span>Logs</span>
+                    </li>
+                    <li>
+                        <SettingsApplicationsIcon className="icon" />
+                        <span>Settings</span>
+                    </li>
+                    <p className="title">USER</p>
+                    <li>
+                        <AccountCircleOutlinedIcon className="icon" />
+                        <span>Profile</span>
+                    </li>
+                    <li onClick={handleLogoutClick}>
+                        <ExitToAppIcon className="icon" />
+                        <span>Logout</span>
+                    </li>
+                </ul>
+            </div>
+            <div className="bottom">
+                <div
+                    className="colorOption"
+                    onClick={() => dispatch({ type: "LIGHT" })}
+                ></div>
+                <div
+                    className="colorOption"
+                    onClick={() => dispatch({ type: "DARK" })}
+                ></div>
             </div>
         </div>
     );
