@@ -3,6 +3,7 @@ import SplitButton from './SplitButton';
 import { differenceInDays } from 'date-fns';
 import SingleBedIcon from '@mui/icons-material/SingleBed';
 import PersonIcon from '@mui/icons-material/Person';
+import api from "../../../api/AxiosConfig";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const Table = () => {
@@ -30,13 +31,19 @@ const Table = () => {
   };
 
   useEffect(() => {
-    const mockRoomTypes = [
-      { id: 1, title: "Phòng Đơn", capacity: 2, pricePerNight: 500000, beds: ["Giường đơn"] },
-      { id: 2, title: "Phòng Đôi", capacity: 4, pricePerNight: 800000, beds: ["Giường đôi", "Giường đơn"] },
-      { id: 3, title: "Phòng Suite", capacity: 6, pricePerNight: 1200000, beds: ["Giường đôi", "Giường đơn", "Giường sofa"] },
-    ];
-
-    setAvailRoomTypes(mockRoomTypes);
+    async function loadRooms() {
+      try {
+        setTotalPrice(0);
+        setShowMessage(false);
+        if (searchParams.get('checkIn')) {
+          const response = await api.get(`/hotels/${hotelId}/roomTypes/available?checkIn=${searchParams.get('checkIn')}&checkOut=${searchParams.get('checkOut')}`);
+          setAvailRoomTypes(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    loadRooms();
   }, [location.search]);
 
   useEffect(() => {
@@ -45,48 +52,61 @@ const Table = () => {
       return sum + selectedRooms[roomType.id].length * roomType.pricePerNight * stayLength;
     }, 0));
     setShowMessage(false);
-  }, [selectedRooms, availRoomTypes]);
+  }, [selectedRooms]);
 
   return (
-    <div className='containerT'>
+    <div className="max-w-[1100px] w-full mx-auto flex items-center justify-center text-left">
       {availRoomTypes?.length > 0 ? (
-        <div className='room-list'>
+        <div className="w-full">
           <h3 className="hotelTitle mt-5">Phòng trống</h3>
-          <table striped>
+          <table className="border-2 border-[#4b76b2] w-full border-collapse mb-5">
             <thead>
               <tr>
-                <th>Loại phòng</th>
-                <th>Số lượng khách</th>
-                <th>Giá cho {stayLength} đêm</th>
-                <th>Điều kiện hủy bỏ</th>
-                <th>Chọn số lượng</th>
-                <th></th>
+                <th className="bg-[#4c76b2] border-2 border-[#4c76b2] text-left p-2 text-white">Loại phòng</th>
+                <th className="bg-[#4c76b2] border-2 border-[#4c76b2] text-left p-2 text-white">Số lượng khách</th>
+                <th className="bg-[#4c76b2] border-2 border-[#4c76b2] text-left p-2 text-white">Giá cho {stayLength} đêm</th>
+                <th className="bg-[#4c76b2] border-2 border-[#4c76b2] text-left p-2 text-white">Điều kiện hủy bỏ</th>
+                <th className="bg-[#4c76b2] border-2 border-[#4c76b2] text-left p-2 text-white">Chọn số lượng</th>
+                <th className="bg-[#4c76b2] border-2 border-[#4c76b2] text-left p-2 text-white"></th>
               </tr>
             </thead>
             <tbody>
               {availRoomTypes?.map((roomType, index) => (
-                <tr key={roomType.id} className='room-row'>
-                  <div className='Studio'>
-                    <h1>{roomType.title}</h1>
-                    {roomType.beds.map((bed, i) => <p key={i}>{bed}<SingleBedIcon /></p>)}
+                <tr key={roomType.id} className="room-row">
+                  <div className="Studio">
+                    <h1 className="text-[#0071c2] text-[14px] text-left inline font-bold leading-5">{roomType.title}</h1>
+                    {roomType.beds.map((bed, i) => (
+                      <p key={i} className="text-[12px] text-[#262626]">{bed}<SingleBedIcon /></p>
+                    ))}
                   </div>
-                  <td>
-                    {new Array(roomType.capacity).fill(1).map((_, i) => <PersonIcon key={i} />)}
+                  <td className="border-2 border-[#4c76b2] text-left p-2">
+                    {new Array(roomType.capacity).fill(1).map((_, i) => (
+                      <PersonIcon key={i} />
+                    ))}
                   </td>
-                  <td>VND {(roomType.pricePerNight * stayLength).toLocaleString('vi-VN')}</td>
-                  <td width={'200px'}>Hoàn tiền 100% trong vòng 24h sau đặt cọc</td>
-                  <td width={'100px'}>
+                  <td className="border-2 border-[#4c76b2] text-left p-2">
+                    VND {(roomType.pricePerNight * stayLength).toLocaleString('vi-VN')}
+                  </td>
+                  <td className="border-2 border-[#4c76b2] text-left p-2">Hoàn tiền 100% trong vòng 24h sau đặt cọc</td>
+                  <td className="border-2 border-[#4c76b2] text-left p-2">
                     <SplitButton id={roomType.id} setSelectedRooms={setSelectedRooms} />
                   </td>
-                  <td style={{ borderBottomColor: 'white', borderRightColor: 'white', textAlign: 'center', width: '256px' }} >
-                    {index === 0 && (
-                      <div className='price'>
+                  {index === 0 && (
+                    <td className="text-center">
+                      <div className="flex flex-col items-center">
                         {totalPrice > 0 && <span>Tổng giá {stayLength} đêm: VND {totalPrice.toLocaleString('vi-VN')}</span>}
-                        {(showMessage && !totalPrice) && <span style={{ color: "red" }}>Vui lòng chọn ít nhất một phòng!</span>}
-                        <button onClick={handleReservation} style={{ borderRadius: '4px' }}>Đặt ngay</button>
+                        {showMessage && !totalPrice && (
+                          <span className="text-red-500">Vui lòng chọn ít nhất một phòng!</span>
+                        )}
+                        <button
+                          onClick={handleReservation}
+                          className="bg-[#4c76b2] text-white px-4 py-2 rounded cursor-pointer hover:bg-[#4c76b2]"
+                        >
+                          Đặt ngay
+                        </button>
                       </div>
-                    )}
-                  </td>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

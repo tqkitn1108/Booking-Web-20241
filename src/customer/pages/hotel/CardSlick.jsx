@@ -2,12 +2,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import CardHeader from '@mui/material/CardHeader';
-import { Navigation } from 'swiper/modules';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button } from '@mui/material';
+import { Navigation } from 'swiper/modules';
 
 const CardSlick = ({ reviews }) => {
     const getRandomColor = () => {
@@ -17,31 +14,39 @@ const CardSlick = ({ reviews }) => {
     };
 
     return (
-        <div className="CardSlick">
-            <Swiper navigation={true} modules={[Navigation]} slidesPerView={3} spaceBetween={16} className="mySwiper">
+        <div className="flex w-full max-w-[1100px] justify-between relative gap-[18px]">
+            <Swiper
+                navigation={true}
+                modules={[Navigation]}
+                slidesPerView={3}
+                spaceBetween={16}
+                className="mySwiper"
+            >
                 {reviews?.map((review, index) => (
-                    <SwiperSlide key={index}>
-                        <CardHeader 
+                    <SwiperSlide key={index} className="border border-[#e7e7e7]">
+                        <CardHeader
                             avatar={
                                 <Avatar sx={{ bgcolor: getRandomColor() }} aria-label="recipe">
                                     {review.fullName[0]}
                                 </Avatar>
                             }
-                            title={<Typography className="text-lg font-semibold">{review.fullName}</Typography>}
-                            subheader={<Typography className="text-sm text-gray-500">{review.reviewDate}</Typography>}
+                            title={review.fullName}
+                            subheader={review.reviewDate}
                         />
-                        <div className="card-content p-4">
-                            <h5 className="CardSlick-desrcibe text-base text-gray-700 mb-2">{review.content}</h5>
-                            <Button size="small" className="text-blue-500 hover:bg-blue-100">Đọc thêm</Button>
+                        <div className="px-4 pb-4">
+                            <h5 className="text-[#474747] font-normal mt-1 text-sm tracking-[0.3px]">
+                                {review.content}
+                            </h5>
+                            <Button size="small">Đọc thêm</Button>
                         </div>
-                        <div className="flex justify-between items-center p-4">
-                            <span className="card-rating text-xl text-yellow-500">{review.rating}</span>
-                        </div>
+                        <span className="absolute top-4 right-4 bg-[#003B95] text-white h-8 w-8 text-center leading-8 font-bold rounded-tl-lg rounded-br-lg">
+                            {review.rating}
+                        </span>
                     </SwiperSlide>
                 ))}
             </Swiper>
         </div>
     );
-}
+};
 
 export default CardSlick;

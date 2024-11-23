@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+import api from '../../../api/AxiosConfig';
 import { useLocation } from 'react-router-dom';
 
 export default function SplitButton({ id, setSelectedRooms }) {
@@ -20,24 +21,25 @@ export default function SplitButton({ id, setSelectedRooms }) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   React.useEffect(() => {
-    const mockRooms = [
-      { roomType: 'Single', price: 100 },
-      { roomType: 'Double', price: 200 },
-      { roomType: 'Suite', price: 300 }
-    ];
-
-    setSelectedIndex(0);
-    setAvailRooms(mockRooms);
-    setOptions(Array.from({ length: mockRooms.length + 1 }, (_, i) => i));
-
-  }, [location.search, id]);
+    async function loadOptions() {
+      try {
+        const response = await api.get(`/hotels/roomTypes/${id}/availableRooms?checkIn=${searchParams.get('checkIn')}&checkOut=${searchParams.get('checkOut')}`);
+        setSelectedIndex(0);
+        setAvailRooms(response.data);
+        setOptions(Array.from({ length: response.data.length + 1 }, (_, i) => i));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    loadOptions();
+  }, [location.search]);
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
     setSelectedRooms((prev) => ({
       ...prev,
       [`${id}`]: availRooms.slice(0, index)
-    }));
+    }))
     setOpen(false);
   };
 
@@ -56,7 +58,7 @@ export default function SplitButton({ id, setSelectedRooms }) {
   return (
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <Button>{options[selectedIndex]}</Button>
+        <Button >{options[selectedIndex]}</Button>
         <Button
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}

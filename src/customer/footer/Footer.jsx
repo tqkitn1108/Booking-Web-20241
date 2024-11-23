@@ -1,56 +1,49 @@
 const Footer = () => {
   return (
-    <div className="footer bg-white text-blue-800 py-8 w-full">
-      <div className="container mx-auto px-6 max-w-full">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 text-sm text-center">
-          <ul className="space-y-2">
-            <li className="text-lg font-semibold">Countries</li>
-            <li>Regions</li>
-            <li>Cities</li>
-            <li>Districts</li>
-            <li>Airports</li>
-            <li>Hotels</li>
+    <div className="flex justify-center text-xs mx-auto my-[50px]">
+      <div className="w-full max-w-[1100px]">
+        <div className="w-full flex justify-between mb-[50px] flex-wrap">
+          <ul className="list-none p-0">
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Countries</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Regions</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Cities</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Districts</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Airports</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Hotels</li>
           </ul>
-
-          <ul className="space-y-2">
-            <li className="text-lg font-semibold">Homes</li>
-            <li>Apartments</li>
-            <li>Resorts</li>
-            <li>Villas</li>
-            <li>Hostels</li>
-            <li>Guest houses</li>
+          <ul className="list-none p-0">
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Homes </li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Apartments </li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Resorts </li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Villas</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Hostels</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Guest houses</li>
           </ul>
-
-          <ul className="space-y-2">
-            <li className="text-lg font-semibold">Unique places to stay</li>
-            <li>Reviews</li>
-            <li>Unpacked: Travel articles</li>
-            <li>Travel communities</li>
-            <li>Seasonal and holiday deals</li>
+          <ul className="list-none p-0">
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Unique places to stay </li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Reviews</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Unpacked: Travel articles </li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Travel communities </li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Seasonal and holiday deals </li>
           </ul>
-
-          <ul className="space-y-2">
-            <li className="text-lg font-semibold">Car rental</li>
-            <li>Flight Finder</li>
-            <li>Restaurant reservations</li>
-            <li>Travel Agents</li>
+          <ul className="list-none p-0">
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Car rental </li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Flight Finder</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Restaurant reservations </li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Travel Agents </li>
           </ul>
-
-          <ul className="space-y-2">
-            <li className="text-lg font-semibold">Customer Service</li>
-            <li>Partner Help</li>
-            <li>Careers</li>
-            <li>Sustainability</li>
-            <li>Press center</li>
-            <li>Safety Resource Center</li>
-            <li>Investor relations</li>
-            <li>Terms & conditions</li>
+          <ul className="list-none p-0">
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Curtomer Service</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Partner Help</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Careers</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Sustainability</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Press center</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Safety Resource Center</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Investor relations</li>
+            <li className="mb-[10px] text-[#003580] cursor-pointer">Terms & conditions</li>
           </ul>
         </div>
-
-        <div className="text-center mt-8 text-sm text-blue-800">
-          Copyright © 2024 TravelBK.
-        </div>
+        <div className="fText">Copyright © 2024 TravelBK.</div>
       </div>
     </div>
   );
