@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { destinations } from '../../../../data/destinationData';
-import { IoCaretBackCircleOutline, IoCaretForwardCircleSharp } from "react-icons/io5";
-import { FaUmbrellaBeach } from "react-icons/fa6";
-import { FaMountainSun } from "react-icons/fa6";
-import { FaCity } from "react-icons/fa";
-
+import {
+    faUmbrellaBeach,
+    faMountainSun,
+    faCity,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState, useEffect } from 'react';
+import { IoCaretBackCircleOutline, IoCaretForwardCircleOutline } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 const CustomTab = ({ label, isActive, onClick }) => (
-    <div className={`choice-item ${isActive ? 'choice-item-active' : ''}`} onClick={onClick}>
+    <div className={`p-2 text-sm border border-transparent rounded-full cursor-pointer ${isActive ? 'text-blue-500 bg-gray-200 border-blue-500' : 'hover:bg-gray-200'}`} onClick={onClick}>
         {label}
     </div>
 );
@@ -26,7 +29,7 @@ const TripPlanner = () => {
 
     useEffect(() => {
         const updateSlidesPerView = () => {
-            if (window.innerWidth <= 46.1875 * 16) {
+            if (window.innerWidth <= 46.1875 * 16) {  // Convert em to px
                 setSlidesPerView(4);
             } else {
                 setSlidesPerView(6);
@@ -34,46 +37,53 @@ const TripPlanner = () => {
         };
 
         window.addEventListener('resize', updateSlidesPerView);
-        updateSlidesPerView();
+        updateSlidesPerView();  // Set initial value when the page loads
+
         return () => {
             window.removeEventListener('resize', updateSlidesPerView);
         };
     }, []);
 
     return (
-        <div className="flex flex-col items-center w-full py-8">
-            <div className="flex mb-8" style={{ textAlign: 'left' }}>
+        <div className="flex flex-col justify-center w-full">
+            <div className="flex space-x-4 mb-2 overflow-x-auto">
                 <CustomTab
-                    label={<div>
-                        <FaUmbrellaBeach />
-                        <div className="choice-item-text" >Bãi biển</div>
-                    </div>}
+                    label={
+                        <div className="flex items-center space-x-2">
+                            <FontAwesomeIcon icon={faUmbrellaBeach} />
+                            <div>Bãi biển</div>
+                        </div>
+                    }
                     isActive={activeTab === 'Beach'}
                     onClick={() => handleTabSelect('Beach')}
                 />
                 <CustomTab
-                    label={<div>
-                        <FaMountainSun />
-                        <div className="choice-item-text">Thiên nhiên</div>
-                    </div>}
+                    label={
+                        <div className="flex items-center space-x-2">
+                            <FontAwesomeIcon icon={faMountainSun} />
+                            <div>Thiên nhiên</div>
+                        </div>
+                    }
                     isActive={activeTab === 'Outdoors'}
                     onClick={() => handleTabSelect('Outdoors')}
                 />
                 <CustomTab
-                    label={<div>
-                        <FaCity />
-                        <div className="choice-item-text">Thành phố</div>
-                    </div>}
+                    label={
+                        <div className="flex items-center space-x-2">
+                            <FontAwesomeIcon icon={faCity} />
+                            <div>Thành phố</div>
+                        </div>
+                    }
                     isActive={activeTab === 'City'}
                     onClick={() => handleTabSelect('City')}
                 />
             </div>
 
-            <div className="w-full max-w-[1200px] relative">
+            <div className={`${activeTab === 'Beach' ? 'block' : 'hidden'} w-full max-w-[1200px] relative`}>
                 <Swiper
                     navigation={{
-                        nextEl: '.swiper-button-next',
                         prevEl: '.swiper-button-prev',
+                        nextEl: '.swiper-button-next',
                     }}
                     modules={[Navigation]}
                     slidesPerView={slidesPerView}
@@ -81,32 +91,94 @@ const TripPlanner = () => {
                     loop={true}
                     className="swiper-container"
                 >
-                    {destinations.filter(destination => destination.type === activeTab).map((destination, i) => (
-                        <SwiperSlide key={i} className="swiper-slide">
-                            <div className="overflow-hidden cursor-pointer flex flex-col items-center">
-                                <img
-                                    src={destination.image}
-                                    alt={destination.name}
-                                    className="rounded-lg w-full h-[140px] object-cover md:h-[130px]"
-                                    style={{ height: '140px' }}
-                                />
-                                <div className="text-center mt-2">
-                                    <h5 className="text-lg">{destination.name}</h5>
-                                    <h5 className="text-gray-700 font-normal mt-1 text-sm">Cách đây 88km</h5>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
+                    {destinations.map((destination, index) => {
+                        if (destination.type === 'Beach')
+                            return (
+                                <SwiperSlide key={index} className="swiper-slide">
+                                    <Link to={`/hotels/search?type=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
+                                        <img src={destination.image} alt="" className="rounded-lg w-full h-[136px] object-cover md:h-[100px]" />
+                                        <div>
+                                            <h5 className="text-lg md:text-base font-bold">{destination.name}</h5>
+                                            <h5 className="text-gray-700 font-normal mt-1 text-sm md:text-xs">Cách đây 88km</h5>
+                                        </div>
+                                    </Link>
+                                </SwiperSlide>
+                            )
+                    })}
+                    <div className="absolute top-1/2 transform -translate-y-1/2 swiper-button-prev">
+                    </div>
+                    <div className="absolute top-1/2 transform -translate-y-1/2 swiper-button-next">
+                    </div>
                 </Swiper>
-                <div className="absolute top-1/2 left-0 transform -translate-y-1/2 swiper-button-prev">
-                    <IoCaretBackCircleOutline className="w-10 h-10 text-indigo-600 cursor-pointer bg-white rounded-full shadow-md hover:bg-gray-200" />
-                </div>
-                <div className="absolute top-1/2 right-0 transform -translate-y-1/2 swiper-button-next">
-                    <IoCaretForwardCircleSharp className="w-10 h-10 text-indigo-600 cursor-pointer bg-white rounded-full shadow-md hover:bg-gray-200" />
-                </div>
+            </div>
+
+            <div className={`${activeTab === 'Outdoors' ? 'block' : 'hidden'} w-full max-w-[1200px] relative`}>
+                <Swiper
+                    navigation={{
+                        prevEl: '.swiper-button-prev',
+                        nextEl: '.swiper-button-next',
+                    }}
+                    modules={[Navigation]}
+                    slidesPerView={slidesPerView}
+                    spaceBetween={16}
+                    loop={true}
+                    className="swiper-container"
+                >
+                    {destinations.map((destination, index) => {
+                        if (destination.type === 'Outdoors')
+                            return (
+                                <SwiperSlide key={index} className="swiper-slide">
+                                    <Link to={`/hotels/search?type=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
+                                        <img src={destination.image} alt="" className="rounded-lg w-full h-[136px] object-cover md:h-[100px]" />
+                                        <div>
+                                            <h5 className="text-lg md:text-base font-bold">{destination.name}</h5>
+                                            <h5 className="text-gray-700 font-normal mt-1 text-sm md:text-xs">Cách đây 88km</h5>
+                                        </div>
+                                    </Link>
+                                </SwiperSlide>
+                            )
+                    })}
+                    <div className="absolute top-1/2 transform -translate-y-1/2 swiper-button-prev">
+                    </div>
+                    <div className="absolute top-1/2 transform -translate-y-1/2 swiper-button-next">
+                    </div>
+                </Swiper>
+            </div>
+
+            <div className={`${activeTab === 'City' ? 'block' : 'hidden'} w-full max-w-[1200px] relative`}>
+                <Swiper
+                    navigation={{
+                        prevEl: '.swiper-button-prev',
+                        nextEl: '.swiper-button-next',
+                    }}
+                    modules={[Navigation]}
+                    slidesPerView={slidesPerView}
+                    spaceBetween={16}
+                    loop={true}
+                    className="swiper-container"
+                >
+                    {destinations.map((destination, index) => {
+                        if (destination.type === 'City')
+                            return (
+                                <SwiperSlide key={index} className="swiper-slide">
+                                    <Link to={`/hotels/search?type=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
+                                        <img src={destination.image} alt="" className="rounded-lg w-full h-[136px] object-cover md:h-[100px]" />
+                                        <div>
+                                            <h5 className="text-lg md:text-base font-bold">{destination.name}</h5>
+                                            <h5 className="text-gray-700 font-normal mt-1 text-sm md:text-xs">Cách đây 88km</h5>
+                                        </div>
+                                    </Link>
+                                </SwiperSlide>
+                            )
+                    })}
+                    <div className="absolute top-1/2 transform -translate-y-1/2 swiper-button-prev">
+                    </div>
+                    <div className="absolute top-1/2 transform -translate-y-1/2 swiper-button-next">
+                    </div>
+                </Swiper>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default TripPlanner;

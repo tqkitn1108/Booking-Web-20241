@@ -123,5 +123,15 @@ export const destinations = [
         "image": "https://cf.bstatic.com/xdata/images/xphoto/300x240/140009644.jpg?k=9c24571453c76ea086717691ffe73d9bc03b14bf0b6248b70512d7648f90016d&o=",
         "type": "Outdoors",
         "name": "Mỹ Tho"
+    },
+    {
+        "image": "https://cf.bstatic.com/xdata/images/xphoto/300x240/140009660.jpg?k=c0098770efe2ca51519b555104cb88ff6f200dfa2f22524da1bcfca5086a2b22&o=",
+        "type": "City",
+        "name": "Điện Biên Phủ"
+    },
+    {
+        "image": "https://cf.bstatic.com/xdata/images/xphoto/300x240/140009660.jpg?k=c0098770efe2ca51519b555104cb88ff6f200dfa2f22524da1bcfca5086a2b22&o=",
+        "type": "City",
+        "name": "Điện Biên Phủ"
     }
 ]

@@ -1,4 +1,3 @@
-import Home from "../customer/pages/home/Home";
 import List from "../customer/pages/list/List";
 import Login from "../customer/pages/login-register/Login";
 import Signup from "../customer/pages/login-register/Signup";
@@ -9,7 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext, useAuth } from "../context/AuthContext";
 import AuthProvider from "../context/AuthContext";
 import { useContext } from "react";
-
+import Home from "../customer/pages/home/home"
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();

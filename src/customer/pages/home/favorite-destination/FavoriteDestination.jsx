@@ -78,7 +78,7 @@ function FavoriteDestination() {
     };
 
     return (
-        <div className="bg-white w-full text-sm p-5">
+        <div className="bg-white w-full text-sm ">
             <div className="border-b border-gray-200 dark:border-gray-700">
                 <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
                     <li className="me-2">
@@ -110,7 +110,7 @@ function FavoriteDestination() {
                     </li>
                 </ul>
             </div>
-            <div className="tab-content border-t border-gray-300 rounded-b-md p-5 bg-white">
+            <div className="tab-content border-t border-gray-300 rounded-b-md bg-white">
                 {activeTab === 'regions' && (
                     <div id="regions-content">
                         <div className="flex flex-wrap">
@@ -120,7 +120,7 @@ function FavoriteDestination() {
                                         .slice(i * numRows, i * numRows + numRows)
                                         .map((item, index) => (
                                             <div key={index} className="mb-4">
-                                                <Link to="/signup" className="font-bold text-blue-600">{item.name}</Link>
+                                                <Link to="/" className="font-bold text-blue-600">{item.name}</Link>
                                                 <div>{`${item.rooms} chỗ nghỉ`}</div>
                                             </div>
                                         ))}
@@ -138,7 +138,7 @@ function FavoriteDestination() {
                                         .slice(i * numRows, i * numRows + numRows)
                                         .map((item, index) => (
                                             <div key={index} className="mb-4">
-                                                <Link to="/signup" className="font-bold text-blue-600">{item.name}</Link>
+                                                <Link to="/" className="font-bold text-blue-600">{item.name}</Link>
                                                 <div>{`${item.rooms} chỗ nghỉ`}</div>
                                             </div>
                                         ))}
@@ -156,7 +156,7 @@ function FavoriteDestination() {
                                         .slice(i * numRows, i * numRows + numRows)
                                         .map((item, index) => (
                                             <div key={index} className="mb-4">
-                                                <Link to="/signup" className="font-bold text-blue-600">{item.name}</Link>
+                                                <Link to="/" className="font-bold text-blue-600">{item.name}</Link>
                                                 <div>{`${item.rooms} chỗ nghỉ`}</div>
                                             </div>
                                         ))}

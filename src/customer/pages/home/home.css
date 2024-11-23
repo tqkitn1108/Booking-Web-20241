@@ -1,0 +1,79 @@
+/* Home Container */
+.home-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+@media (max-width: 740px) {
+    .home-container {
+        max-width: 350px;
+    }
+}
+
+/* Title */
+.home-title {
+    font-weight: 700;
+    font-size: 24px;
+    text-align: left;
+}
+
+/* Description */
+.home-describe {
+    color: #474747;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+}
+
+/* Content Container */
+.content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 35px;
+}
+
+/* Swiper CSS */
+.swiper {
+    position: static;
+}
+
+.swiper-button-prev {
+    left: -17px;
+}
+
+.swiper-button-next {
+    right: -17px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    position: absolute;
+    height: 34px;
+    width: 34px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    color: #1a1a1a;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background-color: #dee2e6;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+    opacity: 0;
+    cursor: none;
+}

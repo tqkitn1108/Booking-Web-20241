@@ -53,7 +53,7 @@ const PropertyType = () => {
     ];
 
     return (
-        <div className="flex justify-center w-full py-8">
+        <div className="flex justify-center w-full">
             <div className="w-full max-w-[1200px] relative">
                 <Swiper
                     navigation={{
@@ -68,7 +68,7 @@ const PropertyType = () => {
                 >
                     {properties.map((property, index) => (
                         <SwiperSlide key={index}>
-                            <div className="p-4 bg-white rounded-lg shadow-md">
+                            <div className="bg-white rounded-lg shadow-lg">
                                 <img src={property.imgSrc} alt="" className="w-full h-48 object-cover rounded-t-lg" />
                                 <div className="p-4">
                                     <div className="mb-2">
@@ -84,11 +84,9 @@ const PropertyType = () => {
                             </div>
                         </SwiperSlide>
                     ))}
-                    <div className="absolute top-1/2 left-0 transform -translate-y-1/2 swiper-button-prev">
-                        <IoCaretBackCircleOutline className="w-8 h-8 text-indigo-600 cursor-pointer" />
+                    <div className="absolute top-1/2 transform -translate-y-1/2 swiper-button-prev">
                     </div>
-                    <div className="absolute top-1/2 right-0 transform -translate-y-1/2 swiper-button-next">
-                        <IoCaretForwardCircleSharp className="w-8 h-8 text-indigo-600 cursor-pointer" />
+                    <div className="absolute top-1/2 transform -translate-y-1/2 swiper-button-next">
                     </div>
                 </Swiper>
             </div>
