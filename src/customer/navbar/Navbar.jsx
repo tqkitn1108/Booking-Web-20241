@@ -35,9 +35,9 @@ const Navbar = () => {
 
   const renderAvatar = (name, backgroundColor) =>
     user.userImage ? (
-      <img className="nav-user-img" src={user.userImage} />
+      <img className="w-9 h-9 leading-[36px] text-center object-cover rounded-full text-[25px]" src={user.userImage} />
     ) : (
-      <div className="nav-user-img" style={{ backgroundColor, color: "#fff" }}>
+      <div className="w-9 h-9 leading-[36px] text-center object-cover rounded-full text-[25px]" style={{ backgroundColor, color: "#fff" }}>
         {getInitials(name)}
       </div>
     );
@@ -55,9 +55,9 @@ const Navbar = () => {
   };
   return (
     <div className="h-16 bg-[#003580] flex justify-center font-sans">
-      <div className="w-full max-w-[1100px] text-white flex items-center justify-between px-4">
+      <div className="w-full max-w-[1100px] text-white flex items-center justify-between">
         <span
-          className="text-2xl font-bold cursor-pointer"
+          className="text-3xl font-bold cursor-pointer"
           onClick={handleLogoClick}
         >
           TravelBK
@@ -65,7 +65,7 @@ const Navbar = () => {
         {userFullName ? (
           <div className="flex items-center gap-2">
             <div className="flex space-x-2">
-              <div className="bg-[#003580] text-white py-2 px-3 rounded hover:bg-[#0c50b0] font-bold cursor-pointer">
+              <div className="bg-[#003580] text-white py-2 px-3 rounded hover:bg-[#0c50b0] cursor-pointer">
                 VND
               </div>
               <div className="bg-[#003580] text-white py-2 px-3 rounded hover:bg-[#0c50b0] cursor-pointer">
@@ -94,7 +94,7 @@ const Navbar = () => {
                 <div className="" tabIndex="-1" {...attrs}>
                   <div className="absolute top-[-2px] right-[-88px] bg-white text-black py-[4px] w-[170px] rounded-[6px] shadow-[3px_3px_5px_0px_black]">
                     <div
-                      className="flex items-center gap-[10px] p-[10px]"
+                      className="flex items-center gap-[10px] p-[10px] cursor-pointer"
                       onClick={() => handleLogoutClick("navigate")}
                     >
                       <div className="flex items-center w-[18px] h-[18px]">
@@ -110,7 +110,7 @@ const Navbar = () => {
                       </div>
                     </div>
                     <div
-                      className="flex items-center gap-[10px] p-[10px]"
+                      className="flex items-center gap-[10px] p-[10px] cursor-pointer"
                       onClick={() => handleLogoutClick("setUserFalse")}
                     >
                       <div className="flex items-center w-[18px] h-[18px]">
@@ -127,7 +127,7 @@ const Navbar = () => {
                 </div>
               )}
             >
-              <div className="relative flex justify-center items-center gap-[10px] mt-[8px] py-[4px] px-[12px] text-[14px]">
+              <div className="relative flex justify-center items-center gap-[10px] mt-[8px] py-[4px] px-[12px] text-[14px] cursor-pointer">
                 {renderAvatar(userFullName, avatarBackgroundColor)}
                 <span className="font-semibold">{userFullName}</span>
               </div>
@@ -154,14 +154,11 @@ const Navbar = () => {
               </a>
             </div>
             <div className="flex gap-2">
-              <button className="bg-white text-[#006ce4] border border-transparent rounded px-4 py-1 hover:bg-gray-100">
+              <button className="bg-white text-[#006ce4] border border-transparent rounded px-2 py-2 hover:bg-gray-100" onClick={() => navigate("/signup")}>
                 Đăng ký
               </button>
-              <button className="bg-white text-[#006ce4] border border-transparent rounded px-4 py-1 hover:bg-gray-100">
+              <button className="bg-white text-[#006ce4] border border-transparent rounded px-2 py-2 hover:bg-gray-100" onClick={() => navigate("/login")}>
                 Đăng nhập
-              </button>
-              <button className="bg-white text-[#006ce4] border border-transparent rounded px-4 py-1 hover:bg-gray-100">
-                <FontAwesomeIcon icon={faUser} />
               </button>
             </div>
           </div>

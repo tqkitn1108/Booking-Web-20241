@@ -221,27 +221,27 @@ const Header = ({ showTitle }) => {
     <div className="flex justify-center bg-[#003580] text-white">
       <div className="w-full max-w-[1100px] mt-5">
         <div className="flex gap-2 mb-12">
-          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px] border border-white">
+          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px] border border-white cursor-pointer">
             <FontAwesomeIcon icon={faBed} />
             <span>Lưu trú</span>
           </div>
-          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px]">
+          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px] cursor-pointer">
             <FontAwesomeIcon icon={faPlane} />
             <span>Chuyến bay</span>
           </div>
-          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px]">
+          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px] cursor-pointer">
             <FontAwesomeIcon icon={faSuitcaseRolling} />
             <span>Chuyến bay + Khách sạn</span>
           </div>
-          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px]">
+          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px] cursor-pointer">
             <FontAwesomeIcon icon={faCar} />
             <span>Thuê xe</span>
           </div>
-          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px]">
+          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px] cursor-pointer">
             <FontAwesomeIcon icon={faLandmark} />
             <span>Địa điểm tham quan</span>
           </div>
-          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px]">
+          <div className="flex items-center gap-2 p-2 hover:bg-[#0c50b0] rounded-[20px] cursor-pointer">
             <FontAwesomeIcon icon={faTaxi} />
             <span>Taxi sân bay</span>
           </div>
@@ -257,7 +257,11 @@ const Header = ({ showTitle }) => {
           </div>
         )}
         <div>
-          <form className="h-[59px] bg-[#ffb700] flex items-center p-1 rounded-md w-full max-w-[1100px] gap-1 relative top-7">
+          <form
+            className="h-[59px] bg-[#ffb700] flex items-center p-1 rounded-md w-full max-w-[1100px] relative top-7 gap-[2px]"
+            action=""
+            onSubmit={handleSearch}
+          >
             <HeadlessTippy
               placement="bottom"
               interactive="true"
@@ -283,9 +287,9 @@ const Header = ({ showTitle }) => {
               )}
               onClickOutside={handleHideResult}
             >
-              <div className="bg-white border border-[#ffb700] rounded-lg p-3 flex-1">
+              <div className="bg-white border border-[#ffb700] rounded-lg p-[14px] flex-1">
                 <div className="flex items-center gap-1">
-                  <div className="flex text-[#1a1a1a] gap-[6px] items-center">
+                  <div className="relative flex text-[#1a1a1a] gap-[6px] items-center">
                     <span className="text-[#474747] w-[20px] mb-[3px]">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -306,7 +310,7 @@ const Header = ({ showTitle }) => {
                     />
                     {errorMessage && buttonClicked && (
                       <div
-                        className="bg-[#d4111e] text-white absolute top-[46px] left-[14px] px-[8px] py-[4px] rounded-[5px] text-[14px] font-normal"
+                        className="bg-[#d4111e] text-white absolute top-[46px] left-[14px] px-[8px] py-[4px] rounded-[5px] text-[14px] font-normal whitespace-nowrap"
                         ref={componentRef3}
                       >
                         <div className="text-[#d4111e] absolute top-[-11px] text-[16px]">
@@ -320,14 +324,14 @@ const Header = ({ showTitle }) => {
                     <FontAwesomeIcon
                       icon={faXmark}
                       onClick={handleClear}
-                      className="text-[#d4111e] absolute top-[-11px] text-[16px]"
+                      className="text-black text-[18px]"
                     />
                   )}
                 </div>
               </div>
             </HeadlessTippy>
             <div
-              className="bg-white border border-[#ffb700] rounded-lg p-3 flex-1"
+              className="bg-white border border-[#ffb700] rounded-lg p-[14px] flex-1"
               ref={componentRef}
             >
               <div
@@ -364,7 +368,7 @@ const Header = ({ showTitle }) => {
             </div>
 
             <div
-              className="bg-white border border-[#ffb700] rounded-lg p-3 flex-1"
+              className="bg-white border border-[#ffb700] rounded-lg p-[14px] flex-1"
               ref={componentRef2}
             >
               <div
@@ -395,9 +399,7 @@ const Header = ({ showTitle }) => {
                       >
                         -
                       </button>
-                      <span>
-                        {options.adult}
-                      </span>
+                      <span>{options.adult}</span>
                       <button
                         className="w-[40px] h-[40px] border-0 rounded-[4px] bg-white text-[#006ce4] text-[20px]"
                         onClick={(event) => handleOption(event, "adult", "i")}
@@ -413,16 +415,18 @@ const Header = ({ showTitle }) => {
                       <button
                         disabled={options.children <= 0}
                         className="w-[40px] h-[40px] border-0 rounded-[4px] bg-white text-[#006ce4] text-[20px]"
-                        onClick={(event) => handleOption(event, "children", "d")}
+                        onClick={(event) =>
+                          handleOption(event, "children", "d")
+                        }
                       >
                         -
                       </button>
-                      <span>
-                        {options.children}
-                      </span>
+                      <span>{options.children}</span>
                       <button
                         className="w-[40px] h-[40px] border-0 rounded-[4px] bg-white text-[#006ce4] text-[20px]"
-                        onClick={(event) => handleOption(event, "children", "i")}
+                        onClick={(event) =>
+                          handleOption(event, "children", "i")
+                        }
                       >
                         +
                       </button>
@@ -439,9 +443,7 @@ const Header = ({ showTitle }) => {
                       >
                         -
                       </button>
-                      <span>
-                        {options.room}
-                      </span>
+                      <span>{options.room}</span>
                       <button
                         className="w-[40px] h-[40px] border-0 rounded-[4px] bg-white text-[#006ce4] text-[20px]"
                         onClick={(event) => handleOption(event, "room", "i")}
@@ -452,7 +454,7 @@ const Header = ({ showTitle }) => {
                   </div>
 
                   <button
-                    className="bg-white text-[#006ce4] border border-[#006ce4] items-center mg[10px] rounded-[4px] inline-flex text-[14px] font-medium justify-center leading-[20px] px-[124px] text-center"
+                    className="bg-white text-[#006ce4] border border-[#006ce4] items-center mg[10px] rounded-[4px] inline-flex text-[18px] font-medium justify-center leading-[20px] px-[124px] py-[8px] text-center"
                     onClick={() => setOpenOptions(!openOptions)}
                   >
                     Xong

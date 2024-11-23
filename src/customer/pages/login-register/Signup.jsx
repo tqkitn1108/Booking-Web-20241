@@ -61,8 +61,8 @@ const Signup = () => {
 
   return (
     <div>
-      <div><Navbar /></div>
-      <div className="bg-light h-24"></div>
+      <div className="fixed w-full"><Navbar /></div>
+      <div className="bg-white h-24"></div>
 
       <Formik
         initialValues={{
@@ -233,7 +233,6 @@ const Signup = () => {
           </section>
         </div>
       </Formik>
-      <div className="bg-light h-24"></div>
     </div>
   );
 };

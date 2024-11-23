@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../../context/AuthContext";
 import LoadingSpinner from "../../../components/loading-spinner/LoadingSpinner";
 import Navbar from "../../navbar/Navbar";
-import { FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL } from "../../../api/UrlConstant";
+import { GOOGLE_AUTH_URL } from "../../../api/UrlConstant";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -41,10 +41,10 @@ function Login() {
   return (
     <div>
       {loading && <LoadingSpinner />}
-      <div>
+      <div className="fixed w-full">
         <Navbar />
       </div>
-      <div className="bg-white h-12"></div>
+      <div className="bg-white h-24"></div>
       <Formik
         initialValues={{
           email: "",
@@ -135,16 +135,6 @@ function Login() {
                 >
                   <FontAwesomeIcon icon={faGoogle} className="mr-2" />
                   Sign in with Google
-                </a>
-              </div>
-
-              <div className="mb-4">
-                <a
-                  href={FACEBOOK_AUTH_URL}
-                  className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
-                >
-                  <FontAwesomeIcon icon={faFacebook} className="mr-2" />
-                  Sign in with Facebook
                 </a>
               </div>
 

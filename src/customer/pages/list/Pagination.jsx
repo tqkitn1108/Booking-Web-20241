@@ -39,7 +39,11 @@ const Pagination = ({
           <button
             key={i}
             onClick={() => handleClick(i)}
-            className={`page-link ${currentPage == i ? "active" : ""}`}
+            className={`w-[40px] h-[40px] flex items-center justify-center rounded border text-[16px] font-medium ${
+              currentPage == i
+                ? "bg-blue-500 text-white border-blue-500"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+            }`}
           >
             {i}
           </button>
@@ -67,7 +71,7 @@ const Pagination = ({
           {/* Previous button */}
           <li className="mx-1">
             <button
-              className="py-2 px-4 bg-blue-300 text-white rounded-full hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-300 ease-in-out"
+              className="py-2 px-4 bg-blue-300 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-300 ease-in-out"
               onClick={goToPrevPage}
               disabled={currentPage === 1}
             >
@@ -80,7 +84,7 @@ const Pagination = ({
           {/* Next button */}
           <li className="mx-1">
             <button
-              className="py-2 px-4 bg-blue-300 text-white rounded-full hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-300 ease-in-out"
+              className="py-2 px-4 bg-blue-300 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-300 ease-in-out"
               aria-label="Next"
               onClick={goToNextPage}
               disabled={currentPage === totalPages}

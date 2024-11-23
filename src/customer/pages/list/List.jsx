@@ -99,9 +99,9 @@ const List = () => {
                   </h3>
                   <div>
                     {filter.options.map((option) => (
-                      <div key={option.value}>
+                      <div key={option.value} className="flex items-center space-x-1">
                         <input
-                          className="cursor-pointer p-[7.5px]"
+                          className="cursor-pointer p-[7.5px] align-middle"
                           type="checkbox"
                           checked={
                             !!searchParams
