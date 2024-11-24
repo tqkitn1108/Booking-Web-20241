@@ -20,7 +20,7 @@ function BusinessRouters() {
   const ProtectedRoute = ({ children }) => {
     const { user } = useContext(AuthContext);
 
-    if (user?.userRole.name !== "HOTEL") {
+    if (user === null || user?.userRole?.name !== "HOTEL") {
       return <Navigate to="/login" />;
     }
 
