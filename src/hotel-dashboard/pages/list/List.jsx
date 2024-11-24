@@ -1,4 +1,10 @@
 import "./list.scss"
+import Sidebar from "../../components/sidebar/Sidebar"
+import Navbar from "../../components/navbar/Navbar"
+import Datatable from "../../components/datatable/Datatable"
+import RoomsDatatable from "../../components/datatable/RoomsDatatable"
+import PendingDatatable from "../../components/datatable/PendingDatatable"
+import BookingList from "../../components/table/Table"
 import { useLocation } from "react-router-dom"
 
 const List = ({ columns, hideSideBar }) => {
@@ -15,18 +21,18 @@ const List = ({ columns, hideSideBar }) => {
   else if (path.endsWith("bookings")) isBookingList = true;
   return (
     <div className="list">
-      {/*Sidebar*/}
+      <Sidebar hideSideBar={hideSideBar} />
       <div className="listContainer">
-        {/*Navbar*/}
-        {isHotelList} {/*Add Datatable*/}
-        {isRoomList} {/*Add RoomsDatatable*/}
-        {isPendingList} {/*Add PendingDatatable*/}
+        <Navbar />
+        {isHotelList && <Datatable columns={columns} />}
+        {isRoomList && <RoomsDatatable columns={columns} />}
+        {isPendingList && <PendingDatatable columns={columns} />}
         {isBookingList && (
           <div className="single">
             <div className="singleContainer">
               <div className="bottom">
                 <h1 className="title">Các đặt phòng mới nhất</h1>
-                {/*Booking List*/}
+                <BookingList />
               </div>
             </div>
           </div>

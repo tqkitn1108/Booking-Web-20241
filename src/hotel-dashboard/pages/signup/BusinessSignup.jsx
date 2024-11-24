@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { registerUser } from '../../../api/ApiAuthService';
 import { Link, useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../../../components/loading-spinner/LoadingSpinner';
 import Navbar from '../../../customer/navbar/Navbar';
 
 const validationSchema = Yup.object().shape({
@@ -88,7 +89,7 @@ const BusinessSignup = () => {
         onSubmit={handleSubmit} // Pass the handleSubmit function directly
       >
         <div>
-          {loading} {/*Loading Spinner*/}
+          {loading && <LoadingSpinner />}
           <section className="vh-100 bg-light">
             <div className="mask d-flex align-items-center h-100 gradient-custom-3">
               <div className="container h-30">

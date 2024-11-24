@@ -1,12 +1,16 @@
 import "./newRoom.scss";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
+import ModalBootstrap from "../../../components/modal/ModalBootstrap";
 import { useState } from "react";
 import { roomInputs } from "../../../data/formSource";
 import api from "../../../api/AxiosConfig";
-import {useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RoomInput = () => {
-  const [setShowModal] = useState(false);
-  const [setModalMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const navigate = useNavigate();
   const [info, setInfo] = useState({});
   const { hotelId } = useParams();
   const [rooms, setRooms] = useState([]);
@@ -23,8 +27,13 @@ const RoomInput = () => {
     const beds = bedList.split(",").map((bed) => bed.trim());
     try {
       console.log({ ...info, rooms, amenities, beds });
-      await api.post(`/hotels/${hotelId}/roomTypes`, { ...info, roomNumbers, amenities, beds });
-      setModalMessage('Thành công! Quay trở lại trang khách sạn.');
+      await api.post(`/hotels/${hotelId}/roomTypes`, {
+        ...info,
+        roomNumbers,
+        amenities,
+        beds,
+      });
+      setModalMessage("Thành công! Quay trở lại trang khách sạn.");
     } catch (err) {
       setModalMessage(err.response);
     }
@@ -33,18 +42,28 @@ const RoomInput = () => {
 
   const handleSelectChange = (event) => {
     const options = event.target.options;
-    const selectedOptionsArray = Array.from(options).filter((option) => option.selected);
+    const selectedOptionsArray = Array.from(options).filter(
+      (option) => option.selected
+    );
     const selectedValues = selectedOptionsArray.map((option) => option.value);
     setAmenities(selectedValues);
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+    navigate(`/business/hotels/${hotelId}`);
+  };
 
   return (
     <div className="new">
-      {/*Add Modal Bootstrap*/}
-      {/*Sidebar*/}
+      <ModalBootstrap
+        body={modalMessage}
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+      />
+      <Sidebar hideSideBar={false} />
       <div className="newContainer">
-        {/*Navbar*/}
+        <Navbar />
         <div className="top">
           <h1>Add New Room</h1>
         </div>
@@ -73,11 +92,18 @@ const RoomInput = () => {
               </div>
               <div className="formInput">
                 <label>Các tiện ích</label>
-                <select id="amenities" multiple onChange={handleSelectChange} className="multi-select">
+                <select
+                  id="amenities"
+                  multiple
+                  onChange={handleSelectChange}
+                  className="multi-select"
+                >
                   <option value={"Ban công"}>Ban công</option>
                   <option value={"Nhìn ra vườn"}>Nhìn ra vườn</option>
                   <option value={"free_wifi"}>Nhìn ra núi</option>
-                  <option value={"free_wifi"}>Nhìn ra địa danh nổi tiếng</option>
+                  <option value={"free_wifi"}>
+                    Nhìn ra địa danh nổi tiếng
+                  </option>
                   <option value={"free_wifi"}>Nhìn ra thành phố</option>
                   <option value={"free_wifi"}>Điều hòa không khí</option>
                   <option value={"free_wifi"}>Máy pha cà phê</option>
