@@ -7,15 +7,18 @@ import { Formik, Field, Form, ErrorMessage, useFormikContext } from 'formik';
 import { format } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import * as Yup from 'yup';
+import api from '../../../api/AxiosConfig';
+import Navbar from '../../navbar/Navbar';
+import LoadingSpinner from '../../../components/loading-spinner/LoadingSpinner';
 
 const GoodToKnow = () => {
   return (
-    <div className="Good">
-      <h4> Good to know </h4>
+    <div className="border border-gray-300 rounded-lg p-[15px] mb-3">
+      <h4 className="font-medium text-[28px] mb-2"> Good to know </h4>
       <div className='no credit'>
-        <p><FontAwesomeIcon icon={faCheckCircle} /> No credit card needed! </p>
-        <p><FontAwesomeIcon icon={faCheckCircle} /> Stay flexible: You can cancel for free at any time, so lock in   this great price today .</p>
-        <p><FontAwesomeIcon icon={faCheckCircle} /> No payment needed today. You'll pay when you stay. </p>
+        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> No credit card needed! </p>
+        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> Stay flexible: You can cancel for free at any time, so lock in   this great price today .</p>
+        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> No payment needed today. You'll pay when you stay. </p>
       </div>
     </div>
   );
@@ -43,6 +46,7 @@ const SecurePage = ({ hotelId, location }) => {
     };
     setLoading(true);
     try {
+      await api.post(`/bookings/hotels/${hotelId}`, requestData);
       setLoading(false);
       alert("Thông tin đặt phòng đã được gửi đi. Mọi thông tin về thông tin đặt phòng sẽ được gửi về email ngay khi khách sạn xác nhận. Vui lòng thường xuyên kiểm tra email của bạn!");
       navigate("/");
@@ -86,18 +90,19 @@ const SecurePage = ({ hotelId, location }) => {
 
   return (
     <div>
+      {loading && <LoadingSpinner />}
       <div className='dad'>
         <div className='Login template'>
-          <div className='form_container p-9 rounded bg-white'>
+          <div className='form_container px-9 py-5 rounded bg-white'>
             <Formik
               initialValues={initialValues}
               onSubmit={completeBooking}
               validate={validate}
             >
-              <Form className='form-secure'>
+              <Form className=''>
                 <div className='mb-2 d-grid'>
-                  <div className='ad1 mb-2' >
-                    <h3 className='text-right'>Enter your details</h3>
+                  <div className='border border-gray-400 rounded-[10px] p-[15px] mb-2' >
+                    <h3 className='text-left font-medium text-[28px] mb-2'>Enter your details</h3>
                     <div className=' name form-group d-flex w-100 mb-3 '>
                       <div className=' m-right' style={{ width: '349px' }}>
                         <label htmlFor='firstname' className='form-label' style={{ fontWeight: 'bold' }}>
@@ -193,6 +198,8 @@ const SecurePage = ({ hotelId, location }) => {
   );
 };
 
+
+
 const ReservationPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -204,81 +211,81 @@ const ReservationPage = () => {
   const [hotel, setHotel] = useState({});
 
   useEffect(() => {
-    try {
-      const hotelData = {
-        name: "Khách sạn Hà Nội",
-        address: "Quận Hoàn Kiếm",
-        rating: 4.5
-      };
-  
-      setHotel(hotelData);
-    } catch (err) {
-      console.log(err);
+    async function loadHotelData() {
+      try {
+        const response = await api.get(`/business/hotels/${hotelId}`);
+        setHotel(response.data);
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }, []);
+    loadHotelData();
+  }, [])
+
 
   return (
     <div>
-      <div className="content-container align-items-center">
-        <div className="reservation-container" >
-          <div className='check'>
-            <div className="hotel-information">
-              <div className="hotel-info-border">
-                <h5>{hotel.name}</h5>
-                <p className=''>Địa chỉ: {hotel.address}</p>
+      <Navbar />
+      <div className="flex items-center justify-center">
+        <div className="flex justify-between items-start" >
+          <div className='mt-5'>
+            <div className="w-[333px] ml-10">
+              <div className="border border-gray-300 rounded-lg p-[20px] mb-3">
+                <h5 className='font-medium text-[20px] mb-2'>{hotel.name}</h5>
+                <p className='mb-2'>Địa chỉ: {hotel.address}</p>
                 <div className='d-flex'  > Rating:
-                  <div className="siRating">
+                  <div className="ml-[15px] mb-2">
                     <button>{hotel.rating?.toFixed(1)}</button>
                   </div>
                 </div>
-                <div className="amenities">
-                  <div className="wifi">
+                <div className="flex flex-wrap">
+                  <div className="flex items-center mr-5 mb-2">
                     <FontAwesomeIcon icon={faWifi} />
-                    <span> Free WiFi</span>
+                    <span className='ml-2'> Free WiFi</span>
                   </div>
-                  <div className="shuttle">
+                  <div className="flex items-center mr-5 mb-2">
                     <FontAwesomeIcon icon={faShuttleVan} />
-                    <span> Shuttle Service</span>
+                    <span className='ml-2'> Shuttle Service</span>
                   </div>
                 </div>
-                <div className="parking">
+                <div className="flex items-center mr-5 mb-2">
                   <FontAwesomeIcon icon={faParking} />
-                  <span> Parking</span>
+                  <span className='ml-2'> Parking</span>
                 </div>
               </div>
             </div>
 
-            <div className="hotel-detail-border" >
-              <h5>Your booking details</h5>
-              <p style={{ fontWeight: 'bold' }}> Check-in: <span className='check-in'>{format(checkInDate, "EEE, dd/MM/yyyy", { locale: vi })}</span> </p>
-              <p style={{ fontWeight: 'bold' }}> Check-out: <span className='check-out'> {format(checkOutDate, "EEE, dd/MM/yyyy", { locale: vi })} </span></p>
-              <p style={{ fontWeight: 'bold' }}> Total length of stay: <span className='totalStays'> {state?.stayLength} đêm </span> </p>
+            <div className="border border-gray-300 rounded-lg p-[20px] mb-3 ml-10" >
+              <h5 className='font-medium text-[20px] mb-2'>Your booking details</h5>
+              <p className='font-bold mb-2'> Check-in: <span className='float-right'>{format(checkInDate, "EEE, dd/MM/yyyy", { locale: vi })}</span> </p>
+              <p className='font-bold mb-2'> Check-out: <span className='float-right'> {format(checkOutDate, "EEE, dd/MM/yyyy", { locale: vi })} </span></p>
+              <p className='font-bold mb-2'> Total length of stay: <span className='float-right'> {state?.stayLength} đêm </span> </p>
               <span className="text-success"> Change your selection </span>
             </div>
 
-            <div className='total-summary'>
-              <h4>Your price summary <span className='unit'> (VND)</span></h4>
+            <div className='border border-gray-300 rounded-lg p-[20px] mb-3 ml-10'>
+              <h4 className='font-medium text-[24px] mb-2'>Your price summary <span className='unit'> (VND)</span></h4>
 
               <div className=' p-3 mb-3' style={{ backgroundColor: '#ADD8E6' }}>
-                <h2 className='tp'>
-                  Total: <span className="total-price">{state?.totalPrice.toLocaleString('vi-VN')}</span>
+                <h2 className='text-left m-0 font-medium text-[32px]'>
+                  Total: <span className="float-right font-bold">{state?.totalPrice.toLocaleString('vi-VN')}</span>
                 </h2>
               </div>
 
               <div className="priceInfor bg-light p-3">
-                <h5>Price Information</h5>
-                <p>
+                <h5 className='font-medium text-[20px] mb-2'>Price Information</h5>
+                <p className='mb-2'>
                   <FontAwesomeIcon icon={faMoneyBill} className="mr-5" />
                   Include VND <span className='vat'>{Math.round(state?.totalPrice / 11).toLocaleString('vi-VN')}</span> in taxes <br /> and charges
                 </p>
                 <p>
-                  10% VAT <span className='tax'>VND {Math.round(state?.totalPrice / 11).toLocaleString('vi-VN')}</span>
+                  10% VAT <span className='float-right'>VND {Math.round(state?.totalPrice / 11).toLocaleString('vi-VN')}</span>
                 </p>
               </div>
             </div>
 
-            <div className="Payment">
-              <h5> Your payment schedule </h5>
+            <div className="border border-gray-300 rounded-lg p-[20px] mb-3 ml-10">
+              <h5 className='font-medium text-[20px] mb-2'> Your payment schedule </h5>
               <p> You 'll be charge a payment of the total <br /> price at any time </p>
             </div>
           </div>
