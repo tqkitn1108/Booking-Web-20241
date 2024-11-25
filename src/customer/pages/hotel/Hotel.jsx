@@ -94,7 +94,7 @@ const Hotel = () => {
               onClick={() => handleMove("r")} />
           </div>
         )}
-        <div className="w-full flex flex-col gap-2 relative mt-[100px]">
+        <div className="w-full flex flex-col gap-2 relative mt-[30px]">
           <div className="absolute top-[60px] right-0 py-[10px] px-[20px] border-none text-black font-bold rounded-[5px] cursor-pointer">
             <span className="font-medium text-sm"><RatingComponent rating={hotel.rating}></RatingComponent></span>
             <button className="bg-[#0a4fb0] text-white px-2 py-1 font-bold border-none rounded-[7px] shadow-[2px_2px_5px_#000b80]">{hotel.rating?.toFixed(1)}</button>
