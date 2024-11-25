@@ -233,6 +233,7 @@ const Signup = () => {
           </section>
         </div>
       </Formik>
+      <div className="bg-white h-24"></div>
     </div>
   );
 };

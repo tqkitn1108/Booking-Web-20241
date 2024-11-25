@@ -45,18 +45,19 @@ const SearchItem = ({ hotel, location }) => {
 
   return (
     <div className="border border-gray-300 p-2.5 rounded-md flex justify-between gap-5 mb-5 w-full bg-[#f2f9fa]">
-      <img src={hotel.photos[0]} alt="" className="siImg" />
+      <img src={hotel.photos[0]} alt="Image" className="w-[200px] h-[200px] object-cover" />
       <div className="flex flex-col gap-2.5 flex-2">
         <div className="inline-flex items-center">
           <h1 className="text-2xl text-[#0071c2]">{hotel.name}</h1>
           <div className="ml-2.5 flex">{renderStars(hotel.star)}</div>
         </div>
-        <div className="text-xs mt-[-2.5px] mb-2.5 inline-block font-semibold">
+        <div className="text-xs mt-[-2.5px] mb-2.5 font-semibold">
           <a
             id="address"
             href={mapSearchString(hotel.address)}
             target="_blank"
             rel="noopener noreferrer"
+            className="block"
           >
             {hotel.address}
           </a>
@@ -64,6 +65,7 @@ const SearchItem = ({ hotel, location }) => {
             href={mapSearchString(hotel.address)}
             target="_blank"
             rel="noopener noreferrer"
+            className="text-blue-500 block"
           >
             Xem trên bản đồ
           </a>

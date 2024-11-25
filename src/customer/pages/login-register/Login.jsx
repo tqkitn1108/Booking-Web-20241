@@ -151,6 +151,7 @@ function Login() {
           </div>
         </Form>
       </Formik>
+      <div className="bg-white h-24"></div>
     </div>
   );
 }
