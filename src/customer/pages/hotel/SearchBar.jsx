@@ -133,7 +133,7 @@ function SearchBar({ setShowRooms }) {
             onChange={handleDateChange}
             moveRangeOnFirstSelection={false}
             ranges={date}
-            className="absolute top-[58px] left-[335px] z-[6] rounded-bl-[4px] rounded-br-[4px] shadow-[2px_2px_8px_rgba(0,0,0,0.2)]"
+            className="absolute top-[58px] left-[335px] z-[6] rounded-bl-[4px] rounded-br-[4px] shadow-[2px_2px_8px_rgba(0,0,0,0.2)] origin-top-left transform scale-[0.93]"
             minDate={new Date()}
           />
         )}
@@ -160,7 +160,7 @@ function SearchBar({ setShowRooms }) {
           </div>
         </div>
         {openOptions && (
-          <div className="font-semibold p-[20px] w-[334px] absolute top-[58px] right-[96px] bg-white text-black rounded-[5px] shadow-[0px_0px_10px_-5px_rgba(0,0,0,0.4)] z-[6]">
+          <div className="font-semibold p-[20px] w-[334px] absolute top-[43px] right-[94px] bg-white text-black rounded-[5px] shadow-[0px_0px_10px_-5px_rgba(0,0,0,0.4)] z-[6] origin-top-center transform scale-[0.88]">
             <div className="flex justify-between m-[10px]">
               <span className="text-black pt-[10px]">Người lớn</span>
               <div className="flex items-center gap-[10px] text-[16px] text-black border-[1px] border-black rounded-[4px] w-[106px]">
