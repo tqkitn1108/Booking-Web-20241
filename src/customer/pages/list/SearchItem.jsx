@@ -45,7 +45,7 @@ const SearchItem = ({ hotel, location }) => {
 
   return (
     <div className="border border-gray-300 p-2.5 rounded-md flex justify-between gap-5 mb-5 w-full bg-[#f2f9fa]">
-      <img src={hotel.photos[0]} alt="" className="siImg" />
+      <img src={hotel.photos[0]} alt="Image" className="w-[200px] h-[200px] object-cover" />
       <div className="flex flex-col gap-2.5 flex-2">
         <div className="inline-flex items-center">
           <h1 className="text-2xl text-[#0071c2]">{hotel.name}</h1>

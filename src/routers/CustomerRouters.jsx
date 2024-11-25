@@ -10,6 +10,7 @@ import { AuthContext, useAuth } from "../context/AuthContext";
 import AuthProvider from "../context/AuthContext";
 import { useContext } from "react";
 import OAuth2RedirectHandler from "../customer/oauth2/OAuth2RedirectHandler";
+import PaymentResult from "../customer/pages/reservation/PaymentResult";
 
 
 function AuthenticatedRoute({ children }) {
@@ -22,7 +23,7 @@ function AuthenticatedRoute({ children }) {
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
-  if (user !== null && user.userRole.name === "HOTEL") {
+  if (user !== null && user.userRole?.name === "HOTEL") {
     return <Navigate to="/business/hotels" />;
   }
   return children;
@@ -42,6 +43,7 @@ function CustomerRouters() {
             <Route path="/hotels/:hotelId/reservation" element={<ReservationPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/payment-result" element={<PaymentResult />} />
             <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           </Routes>
           {/* </BrowserRouter> */}

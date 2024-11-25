@@ -21,6 +21,7 @@
     "axios": "^1.6.2",
     "booking-web-fe": "file:",
     "bootstrap": "^5.3.2",
+    "dayjs": "^1.11.13",
     "formik": "^2.4.5",
     "fuse.js": "^7.0.0",
     "jwt-decode": "^4.0.0",
