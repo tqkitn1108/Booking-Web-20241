@@ -13,7 +13,7 @@ function Bookings() {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [rating, setRating] = useState(0);
-    const [reviewText, setReviewText] = React.useState("");
+    const [reviewText, setReviewText] = useState("");
     const user = JSON.parse(localStorage.getItem("user"));
     const [bookingInfo, setBookingInfo] = useState({});
     const [list, setList] = useState([]);
@@ -49,7 +49,6 @@ function Bookings() {
                 }
             }))
             setList(data);
-            console.log("List: ", data);
         } catch (error) {
             console.log(error);
         }
@@ -72,12 +71,6 @@ function Bookings() {
 
     const handleSubmitReview = async () => {
         try {
-            if (reviewText === null || reviewText === "") {
-                reviewText = "Không có nhận xét";
-            }
-            if (rating === null) {
-                rating = 10;
-            }
             await api.post(`/hotels/${bookingInfo.hotelId}/reviews`,
                 {
                     bookingId: bookingInfo.id,
@@ -85,11 +78,8 @@ function Bookings() {
                     rating: rating,
                     content: reviewText,
                 });
-            console.log("Form đánh giá: ", rating, reviewText);
             setModalMessage('Gửi đánh giá thành công!');
         } catch (err) {
-            console.log(err);
-            const errorMessage = err.response?.data?.message || 'Có lỗi xảy ra. Vui lòng thử lại!';
             setModalMessage(err.response);
         }
         setShowModal(true);
@@ -132,7 +122,7 @@ function Bookings() {
                                     <div><span className="font-bold">Order ID: </span>{booking.id}</div>
                                 </div>
                                 <div>
-                                    <span className={`status ${booking.bookingStatus} px-2 py-1 rounded text-white ${booking.bookingStatus === 'ACCEPTED' ? 'bg-green-500' : booking.bookingStatus === 'PENDING' ? 'bg-yellow-500' : 'bg-red-500'}`}>{booking.bookingStatus}</span>
+                                    <span className={`status ${booking.bookingStatus} px-2 py-1 rounded text-white ${['ACCEPTED', 'PAID', 'COMPLETED', 'CHECKED_IN'].includes(booking.bookingStatus) ? 'bg-green-500' : booking.bookingStatus === 'PENDING' ? 'bg-yellow-500' : 'bg-red-500'}`}>{booking.bookingStatus}</span>
                                 </div>
                                 <div className="mt-3">
                                     <button onClick={() => toPDF()} className="bg-black text-white border border-black rounded px-2 py-1 mr-2 mt-3">Download PDF</button>
@@ -140,14 +130,13 @@ function Bookings() {
                                         <button className="bg-black text-white border border-black rounded px-2 py-1 mt-3">
                                             &#10004; Đã đánh giá
                                         </button>
-                                    ) : (
-                                        <button
-                                            className="bg-black text-white border border-black rounded px-2 py-1 mt-3"
-                                            onClick={() => handleRateReviewClick(booking.id, booking.hotelId)}
-                                        >
-                                            Đánh giá về khách sạn
-                                        </button>
-                                    )}
+                                    ) : booking.bookingStatus === 'COMPLETED' &&
+                                    <button
+                                        className="bg-black text-white border border-black rounded px-2 py-1 mt-3"
+                                        onClick={() => handleRateReviewClick(booking.id, booking.hotelId)}>
+                                        Đánh giá về khách sạn
+                                    </button>
+                                    }
                                 </div>
                             </div>
                         ))}
@@ -160,21 +149,15 @@ function Bookings() {
                         <div className="bg-white p-5 rounded shadow-lg w-[400px]">
                             <h2 className="text-xl font-semibold mb-4">Đánh giá khách sạn</h2>
                             <div className="mb-3">
-                                <label className="block mb-2">Đánh giá chỗ nghỉ</label>
-                                <select value={rating} onChange={handleRatingChange} className="w-full p-2 border border-gray-300 rounded mb-4">
-                                    <option disabled selected> -- Điểm trên thang 10 --</option>
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>
+                                <label className="block mb-1">Điểm đánh giá (1-5):</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="5"
+                                    value={rating}
+                                    onChange={handleRatingChange}
+                                    className="w-full px-2 py-1 border rounded"
+                                />
                             </div>
                             <div className="mb-4">
                                 <label className="block mb-1">Nhận xét:</label>
