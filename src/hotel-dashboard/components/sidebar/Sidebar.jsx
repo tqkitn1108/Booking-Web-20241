@@ -31,6 +31,7 @@ const Sidebar = ({ hideSideBar }) => {
     useEffect(() => {
         async function loadData() {
             try {
+                console.log("Hotel ID: ", hotelId);
                 const response = await api.get(`/business/hotels/${hotelId}`);
                 setHotelImg(response.data.photos?.[0])
                 setHotelName(response.data.name);
@@ -74,7 +75,7 @@ const Sidebar = ({ hideSideBar }) => {
                             <Link to={`/business/hotels/${hotelId}/bookings/pending`} style={{ textDecoration: "none" }}>
                                 <li>
                                     <PersonOutlineIcon className="icon" />
-                                    <span>Đặt phòng đang chờ</span>
+                                    <span>Đặt phòng gần đây</span>
                                 </li>
                             </Link>
                             <Link to={`/business/hotels/${hotelId}/bookings`} style={{ textDecoration: "none" }}>

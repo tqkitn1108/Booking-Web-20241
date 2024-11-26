@@ -13,7 +13,7 @@ function Bookings() {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [rating, setRating] = useState(0);
-    const [reviewText, setReviewText] = useState("");
+    const [reviewText, setReviewText] = React.useState("");
     const user = JSON.parse(localStorage.getItem("user"));
     const [bookingInfo, setBookingInfo] = useState({});
     const [list, setList] = useState([]);
@@ -49,6 +49,7 @@ function Bookings() {
                 }
             }))
             setList(data);
+            console.log("List: ", data);
         } catch (error) {
             console.log(error);
         }
@@ -71,6 +72,12 @@ function Bookings() {
 
     const handleSubmitReview = async () => {
         try {
+            if (reviewText === null || reviewText === "") {
+                reviewText = "Không có nhận xét";
+            }
+            if (rating === null) {
+                rating = 10;
+            }
             await api.post(`/hotels/${bookingInfo.hotelId}/reviews`,
                 {
                     bookingId: bookingInfo.id,
@@ -78,8 +85,11 @@ function Bookings() {
                     rating: rating,
                     content: reviewText,
                 });
+            console.log("Form đánh giá: ", rating, reviewText);
             setModalMessage('Gửi đánh giá thành công!');
         } catch (err) {
+            console.log(err);
+            const errorMessage = err.response?.data?.message || 'Có lỗi xảy ra. Vui lòng thử lại!';
             setModalMessage(err.response);
         }
         setShowModal(true);
@@ -150,15 +160,21 @@ function Bookings() {
                         <div className="bg-white p-5 rounded shadow-lg w-[400px]">
                             <h2 className="text-xl font-semibold mb-4">Đánh giá khách sạn</h2>
                             <div className="mb-3">
-                                <label className="block mb-1">Điểm đánh giá (1-5):</label>
-                                <input
-                                    type="number"
-                                    min="1"
-                                    max="5"
-                                    value={rating}
-                                    onChange={handleRatingChange}
-                                    className="w-full px-2 py-1 border rounded"
-                                />
+                                <label className="block mb-2">Đánh giá chỗ nghỉ</label>
+                                <select value={rating} onChange={handleRatingChange} className="w-full p-2 border border-gray-300 rounded mb-4">
+                                    <option disabled selected> -- Điểm trên thang 10 --</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
                             </div>
                             <div className="mb-4">
                                 <label className="block mb-1">Nhận xét:</label>

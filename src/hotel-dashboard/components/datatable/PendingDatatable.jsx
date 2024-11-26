@@ -21,7 +21,7 @@ const PendingDatatable = ({ columns }) => {
 
   async function loadData() {
     try {
-      const response = await api.get(`/bookings/hotels/${hotelId}/pending`);
+      const response = await api.get(`/bookings/hotels/${hotelId}/recently`);
       // response.data = response.data.map(booking => ({
       //   ...booking,
       //   rooms: booking.rooms.map(room => room.roomNumber).join(", ")
@@ -33,13 +33,70 @@ const PendingDatatable = ({ columns }) => {
     setLoading(false);
   }
 
-  const handleComfirm = async (booking, status) => {
+  const handleCloseModal = () => {
+    loadData();
+    setShowModal(false);
+  };
+
+  // const actionColumn = [
+  //   {
+  //     field: "action",
+  //     headerName: "Action",
+  //     width: 150,
+  //     renderCell: (params) => {
+  //       return (
+  //         <div className="cellAction">
+  //           {/* <Link to={`/business/hotels/${params.row.id}`} style={{ textDecoration: "none" }}> */}
+  //           {/* <div className="viewButton">View</div> */}
+  //           {/* </Link> */}
+
+  //           <div className="acceptButton" onClick={() => handleComfirm(params.row, 'ACCEPTED')}>Accept</div>
+
+  //           <div className="deleteButton" onClick={() => handleComfirm(params.row, 'CANCELLED')}>Cancel</div>
+  //         </div>
+  //       );
+  //     },
+  //   },
+  // ];
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <select
+            value={params.row.bookingStatus}
+            onChange={(e) => handleStatusChange(params.row, e.target.value)}
+            style={{
+              padding: "5px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+              background: "#f9f9f9",
+              cursor: "pointer",
+            }}
+          >
+            {/* <option value="PENDING">PENDING</option> */}
+            <option value="CANCELLED">CANCELLED</option>
+            {/* <option value="ACCEPTED">ACCEPTED</option> */}
+            <option value="PAID">PAID</option>
+            <option value="COMPLETED">COMPLETED</option>
+            <option value="CHECKED IN">CHECKED IN</option>
+          </select>
+        );
+      },
+    }
+  ];
+
+  const handleStatusChange = async (booking, newStatus) => {
     setLoading(true);
     try {
-      booking.bookingStatus = status;
-      await api.put(`/bookings/${booking.id}`, booking);
-      setList(list.filter((item) => item[booking.id] !== booking.id));
-      setModalMessage('Thành công!');
+      await api.patch(`/bookings/${booking.id}`, { status: newStatus });
+      if (newStatus === "COMPLETED" || newStatus === "CANCELLED") {
+        setList(list.filter((item) => item[booking.id] !== booking.id));
+      }
+      setModalMessage('Thay đổi trạng thái đặt phòng thành công!');
     } catch (err) {
       setModalMessage(err.response.data.detail);
     }
@@ -47,37 +104,12 @@ const PendingDatatable = ({ columns }) => {
     setShowModal(true);
   };
 
-  const handleCloseModal = () => {
-    loadData();
-    setShowModal(false);
-  };
-
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            {/* <Link to={`/business/hotels/${params.row.id}`} style={{ textDecoration: "none" }}> */}
-            {/* <div className="viewButton">View</div> */}
-            {/* </Link> */}
-
-            <div className="acceptButton" onClick={() => handleComfirm(params.row, 'ACCEPTED')}>Accept</div>
-
-            <div className="deleteButton" onClick={() => handleComfirm(params.row, 'CANCELLED')}>Cancel</div>
-          </div>
-        );
-      },
-    },
-  ];
   return (
     <div className="datatable" style={{ width: "100%" }}>
       <ModalBootstrap body={modalMessage} showModal={showModal} handleCloseModal={handleCloseModal} />
       {loading && <LoadingSpinner />}
       <div className="datatableTitle">
-        Danh sách đặt phòng đang chờ xét duyệt
+        Danh sách đặt phòng gần đây
         <Link to={`/business/hotels/${hotelId}/bookings`} className="link">
           Xem tất cả đặt phòng
         </Link>

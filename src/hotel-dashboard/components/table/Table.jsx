@@ -57,7 +57,7 @@ const BookingList = () => {
                             <TableCell className="tableCell">{booking.checkOutDate}</TableCell>
                             <TableCell className="tableCell">{booking.rooms.map(room => room.roomNumber).join(", ")}</TableCell>
                             <TableCell className="tableCell">{booking.totalPrice.toLocaleString('vi-VN')}</TableCell>
-                            <TableCell className="tableCell">Thanh toán tại chỗ nghỉ</TableCell>
+                            <TableCell className="tableCell">{booking.bookingStatus === 'PAID' ? 'Thanh toán trực tuyến' : 'Thanh toán tại chỗ nghỉ'}</TableCell>
                             <TableCell className="tableCell">
                                 <span className={`status ${booking.bookingStatus}`}>{booking.bookingStatus}</span>
                             </TableCell>

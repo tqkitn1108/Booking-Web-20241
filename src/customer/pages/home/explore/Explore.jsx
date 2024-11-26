@@ -38,7 +38,7 @@ const Explore = () => {
                 >
                     {destinations.map((destinations, i) => (
                         <SwiperSlide key={i} className="swiper-slide">
-                            <Link to={`/hotels/search?type=${destinations.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
+                            <Link to={`/hotels/search?location=${destinations.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
                                 <img
                                     src={destinations.image}
                                     alt={destinations.label}
