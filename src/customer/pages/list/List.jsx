@@ -97,7 +97,7 @@ const List = () => {
                   <h3 className="text-[#555] text-base font-bold mb-2.5">
                     {filter.name}{" "}
                   </h3>
-                  <div>
+                  <div className="space-y-[8px]">
                     {filter.options.map((option) => (
                       <div key={option.value} className="flex items-center space-x-1">
                         <input
@@ -179,6 +179,7 @@ const List = () => {
           </div>
         </div>
       </div>
+      <div className="bg-white h-24"></div>
     </div>
   );
 };

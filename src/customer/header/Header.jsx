@@ -247,7 +247,7 @@ const Header = ({ showTitle }) => {
           </div>
         </div>
         {showTitle && (
-          <div className="mb-[100px]">
+          <div className="mb-[100px] h-[40px]">
             <h1 className="my-20 text-5xl font-bold leading-[62px] mb-0">
               Tìm chỗ nghỉ tiếp theo
             </h1>
@@ -258,7 +258,7 @@ const Header = ({ showTitle }) => {
         )}
         <div>
           <form
-            className="h-[59px] bg-[#ffb700] flex items-center p-1 rounded-md w-full max-w-[1100px] relative top-7 gap-[2px]"
+            className="h-[59px] bg-[#ffb700] flex items-center p-1 rounded-md w-full max-w-[1100px] relative top-7 gap-[3px]"
             action=""
             onSubmit={handleSearch}
           >
@@ -287,7 +287,7 @@ const Header = ({ showTitle }) => {
               )}
               onClickOutside={handleHideResult}
             >
-              <div className="bg-white border border-[#ffb700] rounded-lg p-[14px] flex-1">
+              <div className="bg-white border border-[#ffb700] rounded-md p-[13px] flex-1">
                 <div className="flex items-center gap-1">
                   <div className="relative flex text-[#1a1a1a] gap-[6px] items-center">
                     <span className="text-[#474747] w-[20px] mb-[3px]">
@@ -306,11 +306,11 @@ const Header = ({ showTitle }) => {
                       spellCheck={false}
                       onChange={(event) => setDestInput(event.target.value)}
                       onFocus={() => setShowResult(true)}
-                      className="border-none outline-none w-[256px]"
+                      className="border-none outline-none w-[256px] placeholder-[#000000]"
                     />
                     {errorMessage && buttonClicked && (
                       <div
-                        className="bg-[#d4111e] text-white absolute top-[46px] left-[14px] px-[8px] py-[4px] rounded-[5px] text-[14px] font-normal whitespace-nowrap"
+                        className="bg-[#d4111e] text-white absolute top-[22px] left-[-3px] px-[8px] py-[4px] rounded-[5px] text-[14px] font-normal whitespace-nowrap"
                         ref={componentRef3}
                       >
                         <div className="text-[#d4111e] absolute top-[-11px] text-[16px]">
@@ -331,7 +331,7 @@ const Header = ({ showTitle }) => {
               </div>
             </HeadlessTippy>
             <div
-              className="bg-white border border-[#ffb700] rounded-lg p-[14px] flex-1"
+              className="bg-white border border-[#ffb700] rounded-md p-[13px] flex-1"
               ref={componentRef}
             >
               <div
@@ -361,14 +361,14 @@ const Header = ({ showTitle }) => {
                   onChange={handleDateChange}
                   moveRangeOnFirstSelection={false}
                   ranges={date}
-                  className="absolute top-[58px] left-[335px] z-[6] rounded-bl-[4px] rounded-br-[4px] shadow-[2px_2px_8px_rgba(0,0,0,0.2)]"
+                  className="absolute top-[58px] left-[329px] z-[6] rounded-bl-[4px] rounded-br-[4px] shadow-[2px_2px_8px_rgba(0,0,0,0.2)]"
                   minDate={new Date()}
                 />
               )}
             </div>
 
             <div
-              className="bg-white border border-[#ffb700] rounded-lg p-[14px] flex-1"
+              className="bg-white border border-[#ffb700] rounded-md p-[13px] flex-1"
               ref={componentRef2}
             >
               <div
@@ -388,7 +388,7 @@ const Header = ({ showTitle }) => {
                 </div>
               </div>
               {openOptions && (
-                <div className="font-semibold p-[20px] w-[334px] absolute top-[58px] right-[96px] bg-white text-black rounded-[5px] shadow-[0px_0px_10px_-5px_rgba(0,0,0,0.4)] z-[6]">
+                <div className="font-semibold p-[20px] w-[334px] absolute top-[58px] right-[110px] bg-white text-black rounded-[5px] shadow-[0px_0px_10px_-5px_rgba(0,0,0,0.4)] z-[6]">
                   <div className="flex justify-between m-[10px]">
                     <span className="text-black pt-[10px]">Người lớn</span>
                     <div className="flex items-center gap-[10px] text-[16px] text-black border-[1px] border-black rounded-[4px] w-[106px]">
