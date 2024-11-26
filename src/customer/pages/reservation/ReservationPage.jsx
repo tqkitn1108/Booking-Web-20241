@@ -44,7 +44,7 @@ const SecurePage = ({ hotelId, location }) => {
       const bookingResponse = await api.post(`/bookings/hotels/${hotelId}`, requestData);
       const bookingId = bookingResponse.data.id;
       const response = await api.post(`/payment/create?amount=${requestData.totalPrice}&orderInfo=${bookingId}`);
-      
+
       const { paymentUrl } = response.data;
       window.location.href = paymentUrl;
     } catch (err) {
@@ -228,7 +228,7 @@ const ReservationPage = () => {
               <div className="border border-gray-300 rounded-lg p-[20px] mb-3">
                 <h5 className='font-medium text-[20px] mb-2'>{hotel.name}</h5>
                 <p className='mb-2'>Địa chỉ: {hotel.address}</p>
-                <div className='d-flex'  > Rating:
+                <div className='d-flex'> Rating:
                   <div className="ml-2 mb-2">
                     <button className='bg-[#0a4fb0] text-white px-1 font-bold border-none rounded-[7px] shadow-[2px_2px_5px_#000b80]'>{hotel.rating?.toFixed(1)}</button>
                   </div>
