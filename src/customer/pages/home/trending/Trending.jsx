@@ -12,35 +12,35 @@ export default function Trending() {
 
     return (
         <div className="grid grid-cols-6 gap-2 w-full max-w-[1200px] relative mx-auto">
-            <Link to={`/hotels/search?type=${cities[0].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-3 trending-top" style={{ height: '250px' }}>
+            <Link to={`/hotels/search?location=${cities[0].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-3 trending-top" style={{ height: '250px' }}>
                 <img className="h-full w-full object-cover" src={cities[0].imageUrl} alt={cities[0].name} />
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 flex items-center trending-title">
                     <p className="text-white trending-title">{cities[0].name}</p>
                     <img className="trending-title-img w-5 ml-2" src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="Vietnam flag" />
                 </div>
             </Link>
-            <Link to={`/hotels/search?type=${cities[1].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-3 trending-top" style={{ height: '250px' }}>
+            <Link to={`/hotels/search?location=${cities[1].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-3 trending-top" style={{ height: '250px' }}>
                 <img className="h-full w-full object-cover" src={cities[1].imageUrl} alt={cities[1].name} />
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 flex items-center trending-title">
                     <p className="text-white trending-title">{cities[1].name}</p>
                     <img className="trending-title-img w-5 ml-2" src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="Vietnam flag" />
                 </div>
             </Link>
-            <Link to={`/hotels/search?type=${cities[2].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-2 trending-bottom" style={{ height: '250px' }}>
+            <Link to={`/hotels/search?location=${cities[2].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-2 trending-bottom" style={{ height: '250px' }}>
                 <img className="h-full w-full object-cover" src={cities[2].imageUrl} alt={cities[2].name} />
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 flex items-center trending-title">
                     <p className="text-white trending-title dest-name">{cities[2].name}</p>
                     <img className="trending-title-img w-4 ml-2" src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="Vietnam flag" />
                 </div>
             </Link>
-            <Link to={`/hotels/search?type=${cities[3].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-2 trending-bottom" style={{ height: '250px' }}>
+            <Link to={`/hotels/search?location=${cities[3].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-2 trending-bottom" style={{ height: '250px' }}>
                 <img className="h-full w-full object-cover" src={cities[3].imageUrl} alt={cities[3].name} />
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 flex items-center trending-title">
                     <p className="text-white trending-title dest-name">{cities[3].name}</p>
                     <img className="trending-title-img w-4 ml-2" src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="Vietnam flag" />
                 </div>
             </Link>
-            <Link to={`/hotels/search?type=${cities[4].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-2 trending-bottom" style={{ height: '250px' }}>
+            <Link to={`/hotels/search?location=${cities[4].name}&page=0`} className="relative overflow-hidden rounded-xl col-span-2 trending-bottom" style={{ height: '250px' }}>
                 <img className="h-full w-full object-cover" src={cities[4].imageUrl} alt={cities[4].name} />
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 flex items-center trending-title">
                     <p className="text-white trending-title dest-name">{cities[4].name}</p>

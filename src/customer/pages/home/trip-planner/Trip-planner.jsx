@@ -95,7 +95,7 @@ const TripPlanner = () => {
                         if (destination.type === 'Beach')
                             return (
                                 <SwiperSlide key={index} className="swiper-slide">
-                                    <Link to={`/hotels/search?type=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
+                                    <Link to={`/hotels/search?location=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
                                         <img src={destination.image} alt="" className="rounded-lg w-full h-[136px] object-cover md:h-[100px]" />
                                         <div>
                                             <h5 className="text-lg md:text-base font-bold">{destination.name}</h5>
@@ -128,7 +128,7 @@ const TripPlanner = () => {
                         if (destination.type === 'Outdoors')
                             return (
                                 <SwiperSlide key={index} className="swiper-slide">
-                                    <Link to={`/hotels/search?type=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
+                                    <Link to={`/hotels/search?location=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
                                         <img src={destination.image} alt="" className="rounded-lg w-full h-[136px] object-cover md:h-[100px]" />
                                         <div>
                                             <h5 className="text-lg md:text-base font-bold">{destination.name}</h5>
@@ -161,7 +161,7 @@ const TripPlanner = () => {
                         if (destination.type === 'City')
                             return (
                                 <SwiperSlide key={index} className="swiper-slide">
-                                    <Link to={`/hotels/search?type=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
+                                    <Link to={`/hotels/search?location=${destination.name}&page=0`} className="overflow-hidden cursor-pointer flex flex-col items-center">
                                         <img src={destination.image} alt="" className="rounded-lg w-full h-[136px] object-cover md:h-[100px]" />
                                         <div>
                                             <h5 className="text-lg md:text-base font-bold">{destination.name}</h5>
