@@ -229,8 +229,8 @@ const ReservationPage = () => {
                 <h5 className='font-medium text-[20px] mb-2'>{hotel.name}</h5>
                 <p className='mb-2'>Địa chỉ: {hotel.address}</p>
                 <div className='d-flex'  > Rating:
-                  <div className="ml-[15px] mb-2">
-                    <button>{hotel.rating?.toFixed(1)}</button>
+                  <div className="ml-2 mb-2">
+                    <button className='bg-[#0a4fb0] text-white px-1 font-bold border-none rounded-[7px] shadow-[2px_2px_5px_#000b80]'>{hotel.rating?.toFixed(1)}</button>
                   </div>
                 </div>
                 <div className="flex flex-wrap">

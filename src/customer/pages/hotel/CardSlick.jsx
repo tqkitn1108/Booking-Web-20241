@@ -39,7 +39,7 @@ const CardSlick = ({ reviews }) => {
                             </h5>
                             <Button size="small">Đọc thêm</Button>
                         </div>
-                        <span className="absolute top-4 right-4 bg-[#003B95] text-white h-8 w-8 text-center leading-8 font-bold rounded-tl-lg rounded-br-lg">
+                        <span className="absolute top-4 right-4 bg-[#003B95] text-white h-8 w-8 text-center leading-8 font-bold rounded-lg">
                             {review.rating}
                         </span>
                     </SwiperSlide>
