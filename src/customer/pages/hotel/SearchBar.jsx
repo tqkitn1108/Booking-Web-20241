@@ -226,7 +226,7 @@ function SearchBar({ setShowRooms }) {
             </div>
 
             <button
-              className="bg-white text-[#006ce4] border border-[#006ce4] items-center mg[10px] rounded-[4px] inline-flex text-[14px] font-medium justify-center leading-[20px] px-[124px] text-center"
+              className="bg-white text-[#006ce4] border border-[#006ce4] items-center mg[10px] rounded-[4px] inline-flex text-[18px] font-medium justify-center leading-[20px] px-[124px] py-[8px] text-center"
               onClick={() => setOpenOptions(!openOptions)}
             >
               Xong

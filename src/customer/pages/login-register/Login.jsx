@@ -11,9 +11,9 @@ import { GOOGLE_AUTH_URL } from "../../../api/UrlConstant";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  password: Yup.string().required("Password is required"),
+    .email("Địa chỉ email không hợp lệ")
+    .required("Vui lòng điền email của bạn"),
+  password: Yup.string().required("Vui lòng điền mật khẩu của bạn"),
 });
 
 function Login() {
@@ -33,7 +33,7 @@ function Login() {
       if (user?.userRole.name === "HOTEL") redirectUrl = "/business/hotels";
       navigate(redirectUrl, { replace: true });
     } else {
-      setErrorMessage("Invalid username or password. Please try again.");
+      setErrorMessage("Tên người dùng hoặc mật khẩu không đúng. Vui lòng thử lại.");
     }
     setLoading(false);
   };
@@ -54,16 +54,16 @@ function Login() {
         onSubmit={handleSubmit}
       >
         <Form>
-          <div className="container mx-auto py-10 flex justify-center">
+          <div className="container mx-auto flex justify-center">
             <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-bold mb-4 text-center">Sign in</h2>
+              <h2 className="text-2xl font-bold mb-4 text-center">Đăng nhập</h2>
 
               <div className="mb-4">
                 <label
                   htmlFor="email"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
+                  className="block text-sm font-bold text-gray-700 mb-2"
                 >
-                  Email address <span className="text-red-500">*</span>
+                  Địa chỉ email <span className="text-red-500">*</span>
                 </label>
                 <Field
                   id="email"
@@ -81,9 +81,9 @@ function Login() {
               <div className="mb-4">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
+                  className="block text-sm font-bold text-gray-700 mb-2"
                 >
-                  Password <span className="text-red-500">*</span>
+                  Mật khẩu <span className="text-red-500">*</span>
                 </label>
                 <Field
                   id="password"
@@ -113,7 +113,7 @@ function Login() {
                   htmlFor="flexCheckDefault"
                   className="text-sm text-gray-700"
                 >
-                  Remember password
+                  Nhớ mật khẩu
                 </label>
               </div>
 
@@ -122,7 +122,7 @@ function Login() {
                   type="submit"
                   className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  Login
+                  Đăng nhập
                 </button>
               </div>
 
@@ -134,24 +134,24 @@ function Login() {
                   className="w-full py-3 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
                 >
                   <FontAwesomeIcon icon={faGoogle} className="mr-2" />
-                  Sign in with Google
+                  Đăng nhập bằng Google
                 </a>
               </div>
 
               <p className="text-center text-sm text-gray-500 mt-5">
-                Don't have an account?{" "}
+                Chưa có tài khoản?{" "}
                 <Link
                   to="/signup"
-                  className="font-semibold text-blue-500 hover:text-blue-700"
+                  className="font-bold text-blue-500 hover:underline"
                 >
-                  Register here
+                  Đăng ký
                 </Link>
               </p>
             </div>
           </div>
         </Form>
       </Formik>
-      <div className="bg-white h-24"></div>
+      <div className="bg-white h-12"></div>
     </div>
   );
 }
