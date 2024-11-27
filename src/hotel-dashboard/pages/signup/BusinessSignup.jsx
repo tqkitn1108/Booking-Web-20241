@@ -11,18 +11,18 @@ import Navbar from '../../../customer/navbar/Navbar';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string()
-    .matches(/^[a-zA-Z\sÀ-ỹ]+$/, 'Name must contain only letters and spaces')
-    .matches(/^(?!.*\s{2})/, 'Name must not contain consecutive spaces')
-    .required('Name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
+    .matches(/^[a-zA-Z\sÀ-ỹ]+$/, 'Họ và tên chỉ được chứa chữ cái và khoảng trắng')
+    .matches(/^(?!.*\s{2})/, 'Họ và tên không được chứa khoảng trắng liền nhau')
+    .required('Vui lòng điền họ và tên của bạn'),
+  email: Yup.string().email('Địa chỉ email không hợp lệ').required('Vui lòng điền email của bạn'),
   password: Yup.string()
-    .min(6, 'Password must be at least 6 characters')
-    .test('no-full-spaces', 'Password must not contain only spaces', value => value.trim() !== '')
-    .required('Password is required'),
+    .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
+    .test('no-full-spaces', 'Mật khẩu không được chỉ toàn khoảng trắng', value => value.trim() !== '')
+    .required('Vui lòng điền mật khẩu của bạn'),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
-  agreement: Yup.boolean().oneOf([true], 'You must agree to the Terms of Service'),
+    .oneOf([Yup.ref('password'), null], 'Mật khẩu xác nhận không khớp')
+    .required('Vui lòng xác nhận lại mật khẩu'),
+  agreement: Yup.boolean().oneOf([true], 'Bạn phải đồng ý với Điều khoản dịch vụ'),
 });
 const BusinessSignup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -77,8 +77,8 @@ const BusinessSignup = () => {
 
   return (
     <div>
-      <div className='fixed-navbar'><Navbar /></div>
-      <div className="bg-light " style={{ height: '100px' }}></div>
+      <div className='fixed w-full z-50'><Navbar /></div>
+      <div className="bg-white " style={{ height: '100px' }}></div>
       <Formik
         initialValues={{
           fullName: '',
@@ -90,14 +90,14 @@ const BusinessSignup = () => {
       >
         <div>
           {loading && <LoadingSpinner />}
-          <section className="vh-100 bg-light">
+          <section className="vh-100 bg-white">
             <div className="mask d-flex align-items-center h-100 gradient-custom-3">
               <div className="container h-30">
                 <div className="row d-flex justify-content-center align-items-center h-100">
                   <div className="col-12 col-md-8 col-lg-6 col-xl-5"> {/* Adjusted column width */}
-                    <div className="card" style={{ borderRadius: '15px' }}>
-                      <div className="card-body p-5">
-                        <h3 className="text-uppercase text-center mb-4">Tạo tài khoản đối tác</h3>
+                    <div className="">
+                      <div className="rounded-lg p-8 shadow-lg bg-white">
+                        <h3 className="text-2xl text-center mb-6 font-bold">Tạo tài khoản đối tác</h3>
                         {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
                         {successMessage &&
                           <>
@@ -108,14 +108,14 @@ const BusinessSignup = () => {
                                 className="btn btn-primary btn-block btn-lg gradient-custom-4 w-100 text-white"
                                 style={customStyle.button}
                               >
-                                Click here to redirect to the login
+                                Chuyển hướng đến trang đăng nhập
                               </button>
                             </div>
                           </>}
                         {!successMessage && <form onSubmit={formik.handleSubmit}>
                           <div className="form-outline mb-3" style={{ ...customStyle.label, fontWeight: 'bold' }}>
-                            <label className="form-label" htmlFor="fullName" style={customStyle.label}>
-                              Full Name <span className="required text-danger">*</span>
+                            <label htmlFor="fullName" className="block text-sm font-bold text-gray-700 mb-2">
+                              Họ và tên <span className="required text-danger">*</span>
                             </label>
                             <input
                               type="text"
@@ -134,8 +134,8 @@ const BusinessSignup = () => {
 
                           {/* Your Email Input */}
                           <div className="form-outline mb-4" style={{ ...customStyle.label, fontWeight: 'bold' }}>
-                            <label className="form-label" htmlFor="email" style={customStyle.label}>
-                              Your Email <span className="required text-danger">*</span>
+                            <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
+                              Địa chỉ email <span className="required text-danger">*</span>
                             </label>
                             <input
                               type="email"
@@ -154,8 +154,8 @@ const BusinessSignup = () => {
 
                           {/* Your Password Input */}
                           <div className="form-outline mb-4" style={{ ...customStyle.label, fontWeight: 'bold', position: 'relative' }}>
-                            <label className="form-label" htmlFor="password" style={customStyle.label}>
-                              Password <span className="required text-danger">*</span>
+                            <label htmlFor="password" className="block text-sm font-bold text-gray-700 mb-2">
+                              Mật khẩu <span className="required text-danger">*</span>
                             </label>
                             <input
                               type={showPassword ? 'text' : 'password'}  // Toggle between 'text' and 'password' based on showPassword state
@@ -188,8 +188,8 @@ const BusinessSignup = () => {
                           {/* Your Password Input */}
                           {/* Repeat Password Input */}
                           <div className="form-outline mb-4" style={{ ...customStyle.label, fontWeight: 'bold', position: 'relative' }}>
-                            <label className="form-label" htmlFor="confirmPassword" style={customStyle.label}>
-                              Repeat Password <span className="required text-danger">*</span>
+                            <label htmlFor="confirmPassword" className="block text-sm font-bold text-gray-700 mb-2">
+                              Xác nhận lại mật khẩu <span className="required text-danger">*</span>
                             </label>
                             <input
                               type={showConfirmPassword ? 'text' : 'password'}  // Toggle between 'text' and 'password' based on showConfirmPassword state
@@ -224,10 +224,10 @@ const BusinessSignup = () => {
                               value=""
                               id="form2Example3cg"
                             />
-                            <label className="form-check-label" htmlFor="form2Example3g" style={customStyle.label}>
-                              I agree all statements in{' '}
-                              <a href="#!" className="text-body">
-                                <u>Terms of service</u>
+                            <label htmlFor="form2Example3g" className="text-sm">
+                              Tôi đồng ý với{' '}
+                              <a href="#!" className="text-blue-500 hover:underline">
+                                Điều khoản dịch vụ
                               </a>
                             </label>
                           </div>
@@ -239,13 +239,13 @@ const BusinessSignup = () => {
                               style={customStyle.button}
                               disabled={!formik.isValid} // Disable the button if the form is not valid
                             >
-                              Register
+                              Đăng ký
                             </button>
                           </div>
-                          <p className="text-center text-muted mt-5 mb-0">
-                            Have already an account?{' '}
-                            <Link to="/login" className="fw-bold text-body">
-                              <u>Login here</u>
+                          <p className="text-center text-sm text-gray-500 mt-6">
+                            Đã có tài khoản?{' '}
+                            <Link to="/login" className="font-bold text-blue-500 hover:underline">
+                              Đăng nhập
                             </Link>
                           </p>
                         </form>}
@@ -258,7 +258,7 @@ const BusinessSignup = () => {
           </section >
         </div >
       </Formik >
-      <div className="bg-light " style={{ height: '100px' }}></div>
+      <div className="bg-white " style={{ height: '100px' }}></div>
     </div>
   );
 }

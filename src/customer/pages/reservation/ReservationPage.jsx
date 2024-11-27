@@ -14,11 +14,11 @@ import LoadingSpinner from '../../../components/loading-spinner/LoadingSpinner';
 const GoodToKnow = () => {
   return (
     <div className="border border-gray-300 rounded-lg p-[15px] mb-3">
-      <h4 className="font-medium text-[28px] mb-2"> Good to know </h4>
+      <h4 className="font-medium text-[28px] mb-2"> Mách nhỏ: </h4>
       <div className='no credit'>
-        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> No credit card needed! </p>
-        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> Stay flexible: You can cancel for free at any time, so lock in   this great price today .</p>
-        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> No payment needed today. You'll pay when you stay. </p>
+        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> Hỗ trợ nhiều phương thức thanh toán. </p>
+        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> Bạn có thể hủy miễn phí bất kỳ lúc nào, vậy nên hãy chốt mức giá tốt hôm nay. </p>
+        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> Không cần thanh toán hôm nay. Bạn sẽ trả khi đến nghỉ. </p>
       </div>
     </div>
   );
@@ -61,23 +61,23 @@ const SecurePage = ({ hotelId, location }) => {
   const validate = (values) => {
     const errors = {};
     if (!values.firstname) {
-      errors.firstname = 'First name is required';
+      errors.firstname = 'Vui lòng điền họ của bạn';
     }
 
     if (!values.lastname) {
-      errors.lastname = 'Last name is required';
+      errors.lastname = 'Vui lòng điền tên của bạn';
     }
 
     if (!values.telephone) {
-      errors.telephone = 'Telephone is required';
+      errors.telephone = 'Vui lòng điền số điện thoại của bạn';
     } else if (!/^\d+$/.test(values.telephone)) {
-      errors.telephone = 'Invalid telephone number';
+      errors.telephone = 'Số điện thoại không hợp lệ';
     }
 
     if (!values.email) {
-      errors.email = 'Email is required';
+      errors.email = 'Vui lòng điền địa chỉ email của bạn';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-      errors.email = 'Invalid email address';
+      errors.email = 'Địa chỉ email không hợp lệ';
     }
 
     return errors;
@@ -97,30 +97,30 @@ const SecurePage = ({ hotelId, location }) => {
               <Form className=''>
                 <div className='mb-2 d-grid'>
                   <div className='border border-gray-400 rounded-[10px] p-[15px] mb-2' >
-                    <h3 className='text-left font-medium text-[28px] mb-2'>Enter your details</h3>
+                    <h3 className='text-left font-medium text-[28px] mb-2'>Nhập thông tin chi tiết của bạn</h3>
                     <div className=' name form-group d-flex w-100 mb-3 '>
                       <div className=' m-right' style={{ width: '349px' }}>
                         <label htmlFor='firstname' className='form-label' style={{ fontWeight: 'bold' }}>
-                          First Name <span className="required text-danger">*</span>
+                          Họ <span className="required text-danger">*</span>
                         </label>
                         <Field
                           id='firstname'
                           type="text"
                           name="firstname"
-                          placeholder='Enter first name'
+                          placeholder='Nhập họ của bạn'
                           className='form-control'
                         />
                         <ErrorMessage name="firstname" component="span" className='form-message' style={{ color: 'red' }} />
                       </div>
                       <div className='m-lef ' style={{ marginLeft: '2rem', width: '315px' }}>
                         <label htmlFor='lastname' className='form-label' style={{ fontWeight: 'bold' }}>
-                          Last Name <span className="required text-danger">*</span>
+                          Tên <span className="required text-danger">*</span>
                         </label>
                         <Field
                           id="lastname"
                           type="text"
                           name="lastname"
-                          placeholder='Enter last name'
+                          placeholder='Nhập tên của bạn'
                           className='form-control'
                         />
                         <ErrorMessage name="lastname" component="span" className='form-message' style={{ color: 'red' }} />
@@ -129,58 +129,58 @@ const SecurePage = ({ hotelId, location }) => {
 
                     <div className='mb-3 w-50'>
                       <label htmlFor='telephone' className='form-label ' style={{ fontWeight: 'bold' }}>
-                        Telephone <span className="required text-danger">*</span>
+                        Số điện thoại <span className="required text-danger">*</span>
                       </label>
                       <Field
                         id="telephone"
                         type="text"
                         name="telephone"
-                        placeholder='Enter telephone'
+                        placeholder='Nhập số điện thoại'
                         className='form-control'
                       />
                       <ErrorMessage name="telephone" component="span" className='form-message' style={{ color: 'red' }} />
                     </div>
                     <div className='mb-3 w-50'>
                       <label htmlFor='email' className='form-label' style={{ fontWeight: 'bold' }}>
-                        Email <span className="required text-danger">*</span>
+                        Địa chỉ email <span className="required text-danger">*</span>
                       </label>
                       <Field
                         id="email"
                         type="email"
                         name="email"
                         readOnly={user !== null}
-                        placeholder='Enter email'
+                        placeholder='Nhập email'
                         className='form-control'
                       />
                       <ErrorMessage name="email" component="span" className='form-message' style={{ color: 'red' }} />
                     </div>
                     <div className="booking-for-section mt-3">
-                      <p className="mb-2" style={{ fontWeight: 'bold' }}>Who are you booking for?</p>
+                      <p className="mb-2" style={{ fontWeight: 'bold' }}>Bạn đặt phòng cho ai?</p>
                       <div className="form-check mb-2">
                         <input type="radio" id="mainGuest" name="bookingFor" className="form-check-input" />
-                        <label htmlFor="mainGuest" className="form-check-label">I'm the main guest</label>
+                        <label htmlFor="mainGuest" className="form-check-label">Tôi là khách lưu trú chính</label>
                       </div>
                       <div className="form-check mb-2">
                         <input type="radio" id="someoneElse" name="bookingFor" className="form-check-input" />
-                        <label htmlFor="someoneElse" className="form-check-label">I'm booking for someone else</label>
+                        <label htmlFor="someoneElse" className="form-check-label">Tôi đặt phòng cho người khác</label>
                       </div>
                     </div>
                     <div className="traveling-for-work mt-3">
-                      <p className="mb-2" style={{ fontWeight: 'bold' }}>Are you traveling for work?</p>
+                      <p className="mb-2" style={{ fontWeight: 'bold' }}>Bạn đang đi công tác?</p>
                       <div className="form-check form-check-inline mb-2">
                         <input type="radio" id="yes" name="travelingForWork" className="form-check-input" />
-                        <label htmlFor="Ayes" className="form-check-label">Yes</label>
+                        <label htmlFor="Ayes" className="form-check-label">Đúng</label>
                       </div>
                       <div className="form-check form-check-inline">
                         <input type="radio" id="no" name="travelingForWork" className="form-check-input" />
-                        <label htmlFor="Ano" className="form-check-label">No</label>
+                        <label htmlFor="Ano" className="form-check-label">Sai</label>
                       </div>
                     </div>
                   </div>
                   <GoodToKnow />
                   <div className=" mt-3">
                     <button type="submit" className="btn btn-primary">
-                      Complete Booking
+                      Hoàn tất đặt phòng
                     </button>
                   </div>
                 </div>
@@ -228,7 +228,7 @@ const ReservationPage = () => {
               <div className="border border-gray-300 rounded-lg p-[20px] mb-3">
                 <h5 className='font-medium text-[20px] mb-2'>{hotel.name}</h5>
                 <p className='mb-2'>Địa chỉ: {hotel.address}</p>
-                <div className='d-flex'> Rating:
+                <div className='d-flex'> Đánh giá:
                   <div className="ml-2 mb-2">
                     <button className='bg-[#0a4fb0] text-white px-1 font-bold border-none rounded-[7px] shadow-[2px_2px_5px_#000b80]'>{hotel.rating?.toFixed(1)}</button>
                   </div>
@@ -240,26 +240,26 @@ const ReservationPage = () => {
                   </div>
                   <div className="flex items-center mr-5 mb-2">
                     <FontAwesomeIcon icon={faShuttleVan} />
-                    <span className='ml-2'> Shuttle Service</span>
+                    <span className='ml-2'> Dịch vụ đưa đón </span>
                   </div>
                 </div>
                 <div className="flex items-center mr-5 mb-2">
                   <FontAwesomeIcon icon={faParking} />
-                  <span className='ml-2'> Parking</span>
+                  <span className='ml-2'> Có chỗ để xe</span>
                 </div>
               </div>
             </div>
 
             <div className="border border-gray-300 rounded-lg p-[20px] mb-3 ml-10" >
-              <h5 className='font-medium text-[20px] mb-2'>Your booking details</h5>
-              <p className='font-bold mb-2'> Check-in: <span className='float-right'>{format(checkInDate, "EEE, dd/MM/yyyy", { locale: vi })}</span> </p>
-              <p className='font-bold mb-2'> Check-out: <span className='float-right'> {format(checkOutDate, "EEE, dd/MM/yyyy", { locale: vi })} </span></p>
-              <p className='font-bold mb-2'> Total length of stay: <span className='float-right'> {state?.stayLength} đêm </span> </p>
-              <span className="text-success"> Change your selection </span>
+              <h5 className='font-medium text-[20px] mb-2'>Chi tiết đặt phòng </h5>
+              <p className='font-bold mb-2'> Nhận phòng: <span className='float-right'>{format(checkInDate, "EEE, dd/MM/yyyy", { locale: vi })}</span> </p>
+              <p className='font-bold mb-2'> Trả phòng: <span className='float-right'> {format(checkOutDate, "EEE, dd/MM/yyyy", { locale: vi })} </span></p>
+              <p className='font-bold mb-2'> Tổng thời gian lưu trú: <span className='float-right'> {state?.stayLength} đêm </span> </p>
+              <span className="text-success cursor-pointer"> Thay đổi lựa chọn của bạn </span>
             </div>
 
             <div className='border border-gray-300 rounded-lg p-[20px] mb-3 ml-10'>
-              <h4 className='font-medium text-[24px] mb-2'>Your price summary <span className='unit'> (VND)</span></h4>
+              <h4 className='font-medium text-[24px] mb-2'>Tóm tắt giá <span className='unit'> (VND)</span></h4>
 
               <div className=' p-3 mb-3' style={{ backgroundColor: '#ADD8E6' }}>
                 <h2 className='text-left m-0 font-medium text-[32px]'>
@@ -268,10 +268,10 @@ const ReservationPage = () => {
               </div>
 
               <div className="priceInfor bg-light p-3">
-                <h5 className='font-medium text-[20px] mb-2'>Price Information</h5>
+                <h5 className='font-medium text-[20px] mb-2'>Thông tin giá</h5>
                 <p className='mb-2'>
                   <FontAwesomeIcon icon={faMoneyBill} className="mr-5" />
-                  Include VND <span className='vat'>{Math.round(state?.totalPrice / 11).toLocaleString('vi-VN')}</span> in taxes <br /> and charges
+                  Bao gồm VND <span className='vat'>{Math.round(state?.totalPrice / 11).toLocaleString('vi-VN')}</span> phí <br /> và thuế
                 </p>
                 <p>
                   10% VAT <span className='float-right'>VND {Math.round(state?.totalPrice / 11).toLocaleString('vi-VN')}</span>
@@ -280,8 +280,8 @@ const ReservationPage = () => {
             </div>
 
             <div className="border border-gray-300 rounded-lg p-[20px] mb-3 ml-10">
-              <h5 className='font-medium text-[20px] mb-2'> Your payment schedule </h5>
-              <p> You 'll be charge a payment of the total <br /> price at any time </p>
+              <h5 className='font-medium text-[20px] mb-2'> Lịch trình thanh toán </h5>
+              <p> Không cần thanh toán hôm nay. Bạn sẽ <br /> trả khi đến nghỉ. </p>
             </div>
           </div>
           <div>

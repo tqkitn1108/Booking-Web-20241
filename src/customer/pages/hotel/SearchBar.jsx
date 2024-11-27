@@ -133,7 +133,7 @@ function SearchBar({ setShowRooms }) {
             onChange={handleDateChange}
             moveRangeOnFirstSelection={false}
             ranges={date}
-            className="absolute top-[58px] left-[335px] z-[6] rounded-bl-[4px] rounded-br-[4px] shadow-[2px_2px_8px_rgba(0,0,0,0.2)] origin-top-left transform scale-[0.93]"
+            className="absolute top-[58px] left-[0] z-[6] rounded-bl-[4px] rounded-br-[4px] shadow-[2px_2px_8px_rgba(0,0,0,0.2)] origin-top-left transform scale-[0.93]"
             minDate={new Date()}
           />
         )}

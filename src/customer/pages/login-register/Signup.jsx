@@ -11,18 +11,18 @@ import Navbar from '../../navbar/Navbar';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string()
-    .matches(/^[a-zA-Z\sÀ-ỹ]+$/, 'Name must contain only letters and spaces')
-    .matches(/^(?!.*\s{2})/, 'Name must not contain consecutive spaces')
-    .required('Name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
+    .matches(/^[a-zA-Z\sÀ-ỹ]+$/, 'Họ và tên chỉ được chứa chữ cái và khoảng trắng')
+    .matches(/^(?!.*\s{2})/, 'Họ và tên không được chứa khoảng trắng liền nhau')
+    .required('Vui lòng điền họ và tên của bạn'),
+  email: Yup.string().email('Địa chỉ email không hợp lệ').required('Vui lòng điền email của bạn'),
   password: Yup.string()
-    .min(10, 'Password must be at least 10 characters')
-    .test('no-full-spaces', 'Password must not contain only spaces', value => value.trim() !== '')
-    .required('Password is required'),
+    .min(10, 'Mật khẩu phải có ít nhất 10 ký tự')
+    .test('no-full-spaces', 'Mật khẩu không được chỉ toàn khoảng trắng', value => value.trim() !== '')
+    .required('Vui lòng điền mật khẩu của bạn'),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
-  agreement: Yup.boolean().oneOf([true], 'You must agree to the Terms of Service'),
+    .oneOf([Yup.ref('password'), null], 'Mật khẩu xác nhận không khớp')
+    .required('Vui lòng xác nhận lại mật khẩu'),
+  agreement: Yup.boolean().oneOf([true], 'Bạn phải đồng ý với Điều khoản dịch vụ'),
 });
 
 const Signup = () => {
@@ -61,7 +61,7 @@ const Signup = () => {
 
   return (
     <div>
-      <div className="fixed w-full"><Navbar /></div>
+      <div className="fixed w-full z-50"><Navbar /></div>
       <div className="bg-white h-24"></div>
 
       <Formik
@@ -81,7 +81,7 @@ const Signup = () => {
                 <div className="flex justify-center items-center h-full">
                   <div className="w-full md:w-2/3 lg:w-1/2 xl:w-5/12">
                     <div className="bg-white rounded-lg shadow-lg p-8">
-                      <h2 className="text-2xl text-center mb-6">Create an account</h2>
+                      <h2 className="text-2xl text-center mb-6 font-bold">Tạo một tài khoản</h2>
                       {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
                       {successMessage && (
                         <>
@@ -100,14 +100,14 @@ const Signup = () => {
                       {!successMessage && (
                         <form onSubmit={formik.handleSubmit}>
                           <div className="mb-4">
-                            <label htmlFor="fullName" className="block text-sm font-bold text-gray-700">
-                              Full Name <span className="text-red-500">*</span>
+                            <label htmlFor="fullName" className="block text-sm font-bold text-gray-700 mb-2">
+                              Họ và tên <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="text"
                               id="fullName"
                               name="fullName"
-                              className={`w-full p-3 border border-gray-300 rounded-lg ${formik.touched.fullName && formik.errors.fullName ? 'border-red-500' : ''}`}
+                              className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-12 ${formik.touched.fullName && formik.errors.fullName ? 'border-red-500' : ''}`}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
                               value={formik.values.fullName}
@@ -119,14 +119,14 @@ const Signup = () => {
 
                           {/* Your Email Input */}
                           <div className="mb-4">
-                            <label htmlFor="email" className="block text-sm font-bold text-gray-700">
-                              Your Email <span className="text-red-500">*</span>
+                            <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
+                              Địa chỉ <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="email"
                               id="email"
                               name="email"
-                              className={`w-full p-3 border border-gray-300 rounded-lg ${formik.touched.email && formik.errors.email ? 'border-red-500' : ''}`}
+                              className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-12 ${formik.touched.email && formik.errors.email ? 'border-red-500' : ''}`}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
                               value={formik.values.email}
@@ -138,14 +138,14 @@ const Signup = () => {
 
                           {/* Your Password Input */}
                           <div className="mb-4 relative">
-                            <label htmlFor="password" className="block text-sm font-bold text-gray-700">
-                              Password <span className="text-red-500">*</span>
+                            <label htmlFor="password" className="block text-sm font-bold text-gray-700 mb-2">
+                              Mật khẩu <span className="text-red-500">*</span>
                             </label>
                             <input
                               type={showPassword ? 'text' : 'password'}
                               id="password"
                               name="password"
-                              className={`w-full p-3 border border-gray-300 rounded-lg ${formik.touched.password && formik.errors.password ? 'border-red-500' : ''}`}
+                              className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-12 ${formik.touched.password && formik.errors.password ? 'border-red-500' : ''}`}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
                               value={formik.values.password}
@@ -165,14 +165,14 @@ const Signup = () => {
 
                           {/* Confirm Password Input */}
                           <div className="mb-4 relative">
-                            <label htmlFor="confirmPassword" className="block text-sm font-bold text-gray-700">
-                              Repeat Password <span className="text-red-500">*</span>
+                            <label htmlFor="confirmPassword" className="block text-sm font-bold text-gray-700 mb-2">
+                              Xác nhận lại mật khẩu <span className="text-red-500">*</span>
                             </label>
                             <input
                               type={showConfirmPassword ? 'text' : 'password'}
                               id="confirmPassword"
                               name="confirmPassword"
-                              className={`w-full p-3 border border-gray-300 rounded-lg ${formik.touched.confirmPassword && formik.errors.confirmPassword ? 'border-red-500' : ''}`}
+                              className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-12 ${formik.touched.confirmPassword && formik.errors.confirmPassword ? 'border-red-500' : ''}`}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
                               value={formik.values.confirmPassword}
@@ -198,9 +198,9 @@ const Signup = () => {
                               className="mr-2"
                             />
                             <label htmlFor="form2Example3g" className="text-sm">
-                              I agree to all statements in{' '}
-                              <a href="#!" className="text-blue-500 underline">
-                                Terms of Service
+                              Tôi đồng ý với {' '}
+                              <a href="#!" className="text-blue-500 hover:underline">
+                                Điều khoản Dịch vụ
                               </a>
                             </label>
                           </div>
@@ -212,15 +212,15 @@ const Signup = () => {
                               className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
                               disabled={!formik.isValid}
                             >
-                              Register
+                              Đăng ký
                             </button>
                           </div>
 
                           {/* Login Link */}
                           <p className="text-center text-sm text-gray-500 mt-6">
-                            Have already an account?{' '}
-                            <Link to="/login" className="font-bold text-blue-500 underline">
-                              Login here
+                            Đã có tài khoản?{' '}
+                            <Link to="/login" className="font-bold text-blue-500 hover:underline">
+                              Đăng nhập
                             </Link>
                           </p>
                         </form>
@@ -233,7 +233,7 @@ const Signup = () => {
           </section>
         </div>
       </Formik>
-      <div className="bg-white h-24"></div>
+      <div className="bg-white h-12"></div>
     </div>
   );
 };

@@ -58,7 +58,7 @@ const Table = () => {
     <div className="max-w-[1100px] w-full mx-auto flex items-center justify-center text-left">
       {availRoomTypes?.length > 0 ? (
         <div className="w-full">
-          <h3 className="hotelTitle mt-5">Phòng trống</h3>
+          <h3 className="hotelTitle mt-5 mb-2">Phòng trống</h3>
           <table className="border-2 border-[#4b76b2] w-full border-collapse mb-5">
             <thead>
               <tr>
@@ -73,12 +73,12 @@ const Table = () => {
             <tbody>
               {availRoomTypes?.map((roomType, index) => (
                 <tr key={roomType.id} className="room-row">
-                  <div className="Studio">
-                    <h1 className="text-[#0071c2] text-[14px] text-left inline font-bold leading-5">{roomType.title}</h1>
+                  <td className="Studio border-2 border-[#4c76b2]">
+                    <h1 className="ml-1 text-[#0071c2] text-[14px] text-left inline font-bold leading-5">{roomType.title}</h1>
                     {roomType.beds.map((bed, i) => (
-                      <p key={i} className="text-[12px] text-[#262626]">{bed}<SingleBedIcon /></p>
+                      <p key={i} className="ml-1 text-[12px] text-[#262626]">{bed}<SingleBedIcon /></p>
                     ))}
-                  </div>
+                  </td>
                   <td className="border-2 border-[#4c76b2] text-left p-2">
                     {new Array(roomType.capacity).fill(1).map((_, i) => (
                       <PersonIcon key={i} />

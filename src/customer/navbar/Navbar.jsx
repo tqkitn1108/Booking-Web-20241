@@ -60,7 +60,7 @@ const Navbar = () => {
           className="text-3xl font-bold cursor-pointer"
           onClick={handleLogoClick}
         >
-          TravelBK
+          BookingHust
         </span>
         {userFullName ? (
           <div className="flex items-center gap-2">

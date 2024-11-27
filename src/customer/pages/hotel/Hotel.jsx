@@ -73,28 +73,28 @@ const Hotel = () => {
   return (
 
     <div className="hotel">
-      <div className='fixed-navbar'><Navbar /></div>
+      <div className='fixed w-full z-50'><Navbar /></div>
       <div className="flex flex-col items-center w-full max-w-[1100px] mx-auto">
         {open && (
           <div className="fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.613)] z-50 flex items-center">
             <FontAwesomeIcon
               icon={faCircleXmark}
-              className="absolute top-5 right-5 text-[30px] text-lightgray cursor-pointer"
+              className="absolute top-5 right-5 text-[30px] text-[#d4d4d4] cursor-pointer"
               onClick={() => setOpen(false)} />
             <FontAwesomeIcon
               icon={faCircleArrowLeft}
-              className="m-5 text-[50px] text-lightgray cursor-pointer"
+              className="m-5 text-[50px] text-[#d4d4d4] cursor-pointer"
               onClick={() => handleMove("l")} />
             <div className="w-full flex justify-center items-center">
               <img src={hotel.photos[slideNumber]} alt="" className="h-[500px] object-cover" />
             </div>
             <FontAwesomeIcon
               icon={faCircleArrowRight}
-              className="m-5 text-[50px] text-lightgray cursor-pointer"
+              className="m-5 text-[50px] text-[#d4d4d4] cursor-pointer"
               onClick={() => handleMove("r")} />
           </div>
         )}
-        <div className="w-full flex flex-col gap-2 relative mt-[30px]">
+        <div className="w-full flex flex-col gap-2 relative mt-[90px]">
           <div className="absolute top-[60px] right-0 py-[10px] px-[20px] border-none text-black font-bold rounded-[5px] cursor-pointer">
             <span className="font-medium text-sm mr-[10px]"><RatingComponent rating={hotel.rating}></RatingComponent></span>
             <button className="bg-[#0a4fb0] text-white px-2 py-1 font-bold border-none rounded-[7px] shadow-[2px_2px_5px_#000b80]">{hotel.rating?.toFixed(1)}</button>

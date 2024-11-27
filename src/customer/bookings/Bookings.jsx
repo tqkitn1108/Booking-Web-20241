@@ -132,7 +132,7 @@ function Bookings() {
                                     <div><span className="font-bold">Order ID: </span>{booking.id}</div>
                                 </div>
                                 <div>
-                                    <span className={`status ${booking.bookingStatus} px-2 py-1 rounded text-white ${booking.bookingStatus === 'ACCEPTED' ? 'bg-green-500' : booking.bookingStatus === 'PENDING' ? 'bg-yellow-500' : 'bg-red-500'}`}>{booking.bookingStatus}</span>
+                                    <span className={`status ${booking.bookingStatus} px-2 py-1 rounded text-white ${['ACCEPTED', 'PAID', 'COMPLETED', 'CHECKED_IN'].includes(booking.bookingStatus) ? 'bg-green-500' : booking.bookingStatus === 'PENDING' ? 'bg-yellow-500' : 'bg-red-500'}`}>{booking.bookingStatus}</span>
                                 </div>
                                 <div className="mt-3">
                                     <button onClick={() => toPDF()} className="bg-black text-white border border-black rounded px-2 py-1 mr-2 mt-3">Download PDF</button>
@@ -140,14 +140,13 @@ function Bookings() {
                                         <button className="bg-black text-white border border-black rounded px-2 py-1 mt-3">
                                             &#10004; Đã đánh giá
                                         </button>
-                                    ) : (
-                                        <button
-                                            className="bg-black text-white border border-black rounded px-2 py-1 mt-3"
-                                            onClick={() => handleRateReviewClick(booking.id, booking.hotelId)}
-                                        >
-                                            Đánh giá về khách sạn
-                                        </button>
-                                    )}
+                                    ) : booking.bookingStatus === 'COMPLETED' &&
+                                    <button
+                                        className="bg-black text-white border border-black rounded px-2 py-1 mt-3"
+                                        onClick={() => handleRateReviewClick(booking.id, booking.hotelId)}>
+                                        Đánh giá về khách sạn
+                                    </button>
+                                    }
                                 </div>
                             </div>
                         ))}
