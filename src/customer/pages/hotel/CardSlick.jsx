@@ -20,7 +20,7 @@ const CardSlick = ({ reviews }) => {
                 modules={[Navigation]}
                 slidesPerView={3}
                 spaceBetween={16}
-                className="mySwiper"
+                className="mySwiper w-full"
             >
                 {reviews?.map((review, index) => (
                     <SwiperSlide key={index} className="border border-[#e7e7e7]">
