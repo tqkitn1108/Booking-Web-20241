@@ -18,7 +18,6 @@ const GoodToKnow = () => {
       <div className='no credit'>
         <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> Hỗ trợ nhiều phương thức thanh toán. </p>
         <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> Bạn có thể hủy miễn phí bất kỳ lúc nào, vậy nên hãy chốt mức giá tốt hôm nay. </p>
-        <p className="mb-3"><FontAwesomeIcon icon={faCheckCircle} /> Không cần thanh toán hôm nay. Bạn sẽ trả khi đến nghỉ. </p>
       </div>
     </div>
   );
@@ -277,11 +276,6 @@ const ReservationPage = () => {
                   10% VAT <span className='float-right'>VND {Math.round(state?.totalPrice / 11).toLocaleString('vi-VN')}</span>
                 </p>
               </div>
-            </div>
-
-            <div className="border border-gray-300 rounded-lg p-[20px] mb-3 ml-10">
-              <h5 className='font-medium text-[20px] mb-2'> Lịch trình thanh toán </h5>
-              <p> Không cần thanh toán hôm nay. Bạn sẽ <br /> trả khi đến nghỉ. </p>
             </div>
           </div>
           <div>

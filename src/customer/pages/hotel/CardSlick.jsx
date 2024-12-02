@@ -37,7 +37,7 @@ const CardSlick = ({ reviews }) => {
                             <h5 className="text-[#474747] font-normal mt-1 text-sm tracking-[0.3px]">
                                 {review.content}
                             </h5>
-                            <Button size="small">Đọc thêm</Button>
+                            {/* <Button size="small">Đọc thêm</Button> */}
                         </div>
                         <span className="absolute top-4 right-4 bg-[#003B95] text-white h-8 w-8 text-center leading-8 font-bold rounded-lg">
                             {review.rating}

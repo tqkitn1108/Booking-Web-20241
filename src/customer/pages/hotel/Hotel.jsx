@@ -153,7 +153,7 @@ const Hotel = () => {
         </div>
         {hotel.reviews?.length > 0 &&
           <div className="max-w-[1100px] w-full">
-            <h3 className="text-[24px] my-3">Đánh giá của khách</h3>
+            <h3 className="text-[24px] my-[12px] font-medium">Đánh giá của khách</h3>
             <div className="slick">
               <CardSlick reviews={hotel.reviews} />
             </div>

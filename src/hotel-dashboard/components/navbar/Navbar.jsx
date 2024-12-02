@@ -47,11 +47,11 @@ const Navbar = () => {
         <div className="business-navbar">
             <div className="wrapper">
                 <div className="search">
-                    <input type="text" placeholder="Search..." />
+                    <input type="text" placeholder="Tìm kiếm..." />
                     <SearchOutlinedIcon />
                 </div>
                 <div className="items">
-                    <div className="item">
+                    {/* <div className="item">
                         <LanguageOutlinedIcon className="icon" />
                         English
                     </div>
@@ -60,8 +60,8 @@ const Navbar = () => {
                             className="icon"
                             onClick={() => dispatch({ type: "TOGGLE" })}
                         />
-                    </div>
-                    <div className="item">
+                    </div> */}
+                    {/* <div className="item">
                         <FullscreenExitOutlinedIcon className="icon" />
                     </div>
                     <div className="item">
@@ -74,7 +74,7 @@ const Navbar = () => {
                     </div>
                     <div className="item">
                         <ListOutlinedIcon className="icon" />
-                    </div>
+                    </div> */}
                     <div className="item">
                         <HeadlessTippy
                             placement="bottom"

@@ -37,11 +37,11 @@ const Homepage = () => {
                     <h3 className="home-describe">Khám phá các điểm đến hàng đầu theo cách bạn thích ở Việt Nam</h3>
                     <TripPlanner />
                 </div>
-                <div className="content-container">
+                {/* <div className="content-container">
                     <h1 className="home-title">Địa điểm yêu thích</h1>
                     <h3 className="home-describe">Khám phá các địa điểm được yêu thích</h3>
                     <FavoriteDestination />
-                </div>
+                </div> */}
             </div>
             <Email />
             <Footer />

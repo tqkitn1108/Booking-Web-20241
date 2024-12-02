@@ -74,7 +74,7 @@ export const hotelInputs = [
     id: "name",
     label: "Tên khách sạn",
     type: "text",
-    placeholder: "My Hotel",
+    placeholder: "Tên khách sạn",
   },
   {
     id: "phoneNumber",
@@ -86,7 +86,7 @@ export const hotelInputs = [
     id: "address",
     label: "Địa chỉ",
     type: "text",
-    placeholder: "elton st, 216",
+    placeholder: "Hai Bà Trưng, Hà Nội",
   }
 ];
 

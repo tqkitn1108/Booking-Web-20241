@@ -120,7 +120,7 @@ const Signup = () => {
                           {/* Your Email Input */}
                           <div className="mb-4">
                             <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
-                              Địa chỉ <span className="text-red-500">*</span>
+                              Địa chỉ email <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="email"

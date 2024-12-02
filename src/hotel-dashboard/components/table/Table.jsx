@@ -12,12 +12,17 @@ import { useParams } from "react-router-dom";
 
 const BookingList = () => {
     const { hotelId } = useParams();
+    const token = localStorage.getItem('token');
     const [bookings, setBookings] = useState([]);
 
     useEffect(() => {
         async function loadData() {
             try {
-                const response = await api.get(`/bookings/hotels/${hotelId}`);
+                const response = await api.get(`/bookings/hotels/${hotelId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setBookings(response.data);
             } catch (error) {
                 console.log(error);

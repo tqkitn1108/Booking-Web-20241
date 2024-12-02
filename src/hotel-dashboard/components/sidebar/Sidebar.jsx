@@ -96,7 +96,7 @@ const Sidebar = ({ hideSideBar }) => {
                                     <span>Tổng quan khách sạn</span>
                                 </li>
                             </Link>
-                            <p className="title">USEFUL</p>
+                            {/* <p className="title">USEFUL</p>
                             <Link to={`/business/hotels/${hotelId}/stats`} style={{ textDecoration: "none" }}>
                                 <li>
                                     <InsertChartIcon className="icon" />
@@ -106,9 +106,9 @@ const Sidebar = ({ hideSideBar }) => {
                             <li>
                                 <NotificationsNoneIcon className="icon" />
                                 <span>Notifications</span>
-                            </li>
+                            </li> */}
                         </>)}
-                    <p className="title">SERVICE</p>
+                    {/* <p className="title">SERVICE</p>
                     <li>
                         <SettingsSystemDaydreamOutlinedIcon className="icon" />
                         <span>System Health</span>
@@ -125,14 +125,14 @@ const Sidebar = ({ hideSideBar }) => {
                     <li>
                         <AccountCircleOutlinedIcon className="icon" />
                         <span>Profile</span>
-                    </li>
+                    </li> */}
                     <li onClick={handleLogoutClick}>
                         <ExitToAppIcon className="icon" />
-                        <span>Logout</span>
+                        <span>Đăng xuất</span>
                     </li>
                 </ul>
             </div>
-            <div className="bottom">
+            {/* <div className="bottom">
                 <div
                     className="colorOption"
                     onClick={() => dispatch({ type: "LIGHT" })}
@@ -141,7 +141,7 @@ const Sidebar = ({ hideSideBar }) => {
                     className="colorOption"
                     onClick={() => dispatch({ type: "DARK" })}
                 ></div>
-            </div>
+            </div> */}
         </div>
     );
 };

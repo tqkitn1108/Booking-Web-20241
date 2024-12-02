@@ -58,7 +58,7 @@ const Table = () => {
     <div className="max-w-[1100px] w-full mx-auto flex items-center justify-center text-left">
       {availRoomTypes?.length > 0 ? (
         <div className="w-full">
-          <h3 className="hotelTitle mt-5 mb-2">Phòng trống</h3>
+          <h3 className="mt-5 mb-2 text-[24px] font-medium">Phòng trống</h3>
           <table className="border-2 border-[#4b76b2] w-full border-collapse mb-5">
             <thead>
               <tr>

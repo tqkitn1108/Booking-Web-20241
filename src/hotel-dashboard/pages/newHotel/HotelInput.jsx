@@ -20,6 +20,7 @@ const HotelInput = () => {
   const [images, setImages] = useState([]);
   const [facilities, setFacilities] = useState([]);
   const [info, setInfo] = useState({});
+  const token = localStorage.getItem('token');
   const location = useLocation();
   const hotelId = new URLSearchParams(location.search).get("hotelId");
 
@@ -108,9 +109,17 @@ const HotelInput = () => {
       if (!newhotel.facilities) newhotel.facilities = facilities;
 
       if (hotelId) {
-        await api.put(`/business/hotels/${hotelId}`, newhotel);
+        await api.put(`/business/hotels/${hotelId}`, newhotel, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
       } else {
-        await api.post("/business/hotels", newhotel);
+        await api.post("/business/hotels", newhotel, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
       }
       setModalMessage("Thành công! Quay trở lại trang chủ.");
     } catch (err) {
@@ -219,7 +228,7 @@ const HotelInput = () => {
             <form>
               <div className="formInput image">
                 <label htmlFor="file">
-                  Image: <DriveFolderUploadOutlinedIcon className="icon" />
+                  Thêm ảnh: <DriveFolderUploadOutlinedIcon className="icon" />
                 </label>
                 <input
                   type="file"

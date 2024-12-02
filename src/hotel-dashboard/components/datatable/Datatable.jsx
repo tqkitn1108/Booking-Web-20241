@@ -11,13 +11,18 @@ const RoomsDatatable = ({ columns }) => {
   const location = useLocation();
   const path = location.pathname;
   const { user } = useContext(AuthContext);
+  const token = localStorage.getItem('token');
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const response = await api.get(`/business/${user.userId}/hotels`);
+        const response = await api.get(`/business/${user.userId}/hotels`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setList(response.data.map(hotel =>
         ({
           id: hotel.id,
@@ -39,7 +44,11 @@ const RoomsDatatable = ({ columns }) => {
   const handleDelete = async (id) => {
     if (window.confirm('Bạn có chắc chắn muốn xóa khách sạn này không?')) {
       try {
-        await api.delete(`${path}/${id}`);
+        await api.delete(`${path}/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setList(list.filter((item) => item.id !== id));
       } catch (err) {
         console.log(err);
